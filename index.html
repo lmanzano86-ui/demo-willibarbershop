@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willi Barbershop — Tampa, FL</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; }
+  body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; }
+  header { background:rgba(13,13,15,.95); padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
+  header .logo { font-weight:900; font-size:1.35rem; letter-spacing:2px; color:#fff; }
+  header .logo span { color:var(--gold); }
+  .lang button { border:1.5px solid var(--gold); background:transparent; color:var(--gold); font-weight:800; border-radius:20px; padding:6px 14px; font-size:.8rem; cursor:pointer; }
+  .lang button.on { background:var(--gold); color:#111; border-color:var(--gold); }
+  .hero { position:relative; }
+  .hero img { width:100%; height:460px; object-fit:cover; display:block; }
+  .hero .veil { position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,15,.15) 20%, rgba(13,13,15,.92) 100%); }
+  .hero .txt { position:absolute; left:0; right:0; bottom:0; padding:24px 24px 30px; }
+  .hero .tag { display:inline-block; background:var(--gold); color:#111; font-size:.72rem; font-weight:900; letter-spacing:2px; border-radius:6px; padding:6px 12px; margin-bottom:12px; }
+  .hero h1 { font-size:2.5rem; line-height:1.02; font-weight:900; letter-spacing:-.5px; }
+  .hero h1 span { color:var(--gold); }
+  .hero p { color:var(--mut); margin-top:10px; font-size:.95rem; }
+  .hero .stars { margin-top:10px; color:var(--gold); font-weight:800; }
+  .hero .stars small { color:var(--mut); font-weight:400; }
+  .cta-row { display:flex; gap:10px; margin-top:16px; }
+  .cta-row a { flex:1; text-align:center; text-decoration:none; font-weight:800; border-radius:12px; padding:15px 8px; font-size:.95rem; }
+  .cta-book { background:var(--gold); color:#111; }
+  .cta-call { background:#1e1e23; color:#fff; border:1px solid #33333a; }
+  .strip { background:var(--gold); overflow:hidden; white-space:nowrap; padding:10px 0; }
+  .strip .inner { display:inline-block; animation:slide 22s linear infinite; font-weight:900; letter-spacing:2px; color:#111; font-size:.85rem; }
+  @keyframes slide { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  main { padding:30px 18px 0; }
+  section { margin-bottom:38px; }
+  .kick { font-size:.72rem; font-weight:900; letter-spacing:3px; color:var(--gold); margin-bottom:8px; }
+  h2 { font-size:1.7rem; font-weight:900; letter-spacing:-.5px; margin-bottom:6px; }
+  .sub { color:var(--mut); font-size:.9rem; margin-bottom:18px; }
+  .price-card { background:var(--card); border:1px solid #26262b; border-radius:16px; padding:16px 18px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .price-card.hot { border-color:var(--gold); background:linear-gradient(135deg,#1a1408,#16161a); position:relative; }
+  .price-card .n h3 { font-size:1.02rem; font-weight:800; }
+  .price-card .n p { font-size:.8rem; color:var(--mut); margin-top:3px; }
+  .price-card .p { font-size:1.5rem; font-weight:900; color:var(--gold); white-space:nowrap; }
+  .price-card .p small { display:block; font-size:.62rem; color:var(--mut); font-weight:400; text-align:right; }
+  .badge { display:inline-block; background:var(--gold); color:#111; font-size:.62rem; font-weight:900; letter-spacing:1px; border-radius:6px; padding:3px 9px; margin-bottom:6px; }
+  .sample-note { font-size:.75rem; color:#6f6a60; margin-top:12px; text-align:center; font-style:italic; }
+  .open7 { background:linear-gradient(135deg,#f0a824,#d17f0e); border-radius:20px; padding:26px 22px; text-align:center; color:#111; }
+  .open7 h2 { color:#111; }
+  .open7 p { font-weight:600; margin-top:8px; font-size:.92rem; }
+  .open7 .big { font-size:2.6rem; font-weight:900; letter-spacing:-1px; }
+  .feat { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  .f { background:var(--card); border:1px solid #26262b; border-radius:14px; padding:16px 12px; text-align:center; }
+  .f .em { font-size:1.8rem; }
+  .f h3 { font-size:.85rem; margin-top:8px; font-weight:800; }
+  .f p { font-size:.75rem; color:var(--mut); margin-top:4px; }
+  .gal { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .gal img { width:100%; height:200px; object-fit:cover; border-radius:14px; border:1px solid #26262b; }
+  .gal img.wide { grid-column:span 2; height:230px; }
+  .rev-box { background:var(--card); border:1px solid #26262b; border-radius:18px; padding:24px 20px; text-align:center; }
+  .rev-box .n { font-size:3rem; font-weight:900; color:var(--gold); }
+  .rev-box .st { color:var(--gold); letter-spacing:4px; font-size:1.1rem; margin:6px 0; }
+  .rev-box p { color:var(--mut); font-size:.88rem; }
+  .rev-box a { display:inline-block; margin-top:14px; color:var(--gold); font-weight:800; text-decoration:none; border:1.5px solid var(--gold); border-radius:30px; padding:11px 26px; font-size:.88rem; }
+  .book { background:linear-gradient(135deg,#16161a,#211a08); border:1px solid var(--gold); border-radius:20px; padding:28px 22px; text-align:center; }
+  .book h2 span { color:var(--gold); }
+  .book p { color:var(--mut); font-size:.9rem; margin:10px 0 18px; }
+  .book .row { display:flex; gap:10px; }
+  .book a { flex:1; text-decoration:none; font-weight:800; border-radius:12px; padding:15px 8px; font-size:.95rem; }
+  .book .b1 { background:var(--gold); color:#111; }
+  .book .b2 { background:#25d366; color:#062b16; }
+  .qrs { display:flex; gap:10px; }
+  .qr { background:#fff; border-radius:14px; padding:12px 8px; text-align:center; flex:1; }
+  .qr img { width:100%; max-width:120px; height:auto; }
+  .qr p { font-size:.72rem; font-weight:800; color:#111; margin-top:6px; }
+  .hours { background:var(--card); border:1px solid #26262b; border-radius:16px; padding:18px; }
+  .hours table { width:100%; font-size:.9rem; border-collapse:collapse; }
+  .hours td { padding:9px 4px; border-bottom:1px solid #26262b; color:var(--mut); }
+  .hours td:last-child { text-align:right; font-weight:700; color:var(--txt); }
+  .hours tr.today td { color:var(--gold); font-weight:800; }
+  .info { text-align:center; margin-top:14px; }
+  .info p { color:var(--mut); font-size:.9rem; margin:6px 0; }
+  .info .tel { font-size:1.5rem; font-weight:900; color:var(--gold); text-decoration:none; letter-spacing:1px; }
+  .fab { position:fixed; bottom:18px; right:18px; width:58px; height:58px; border-radius:50%; background:#25d366; display:flex; align-items:center; justify-content:center; font-size:1.7rem; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.5); z-index:99; }
+  footer { background:#08080a; text-align:center; padding:28px 18px 96px; font-size:.82rem; color:#6f6a60; border-top:1px solid #1e1e23; }
+  footer .logo { font-weight:900; letter-spacing:2px; color:#fff; font-size:1.1rem; }
+  footer .logo span { color:var(--gold); }
+  .demo-tag { background:#3a2f10; color:#d8b45a; text-align:center; font-size:.75rem; padding:8px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">WILLI<span> BARBERSHOP</span></div>
+  <div class="lang">
+    <button id="btn-es" class="on" onclick="setLang('es')">ES</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<div class="hero">
+  <img src="imgs/interior.jpg" alt="Willi Barbershop">
+  <div class="veil"></div>
+  <div class="txt">
+    <div class="tag" data-es="TAMPA · FLORIDA" data-en="TAMPA · FLORIDA">TAMPA · FLORIDA</div>
+    <h1 data-es="CORTES FRESCOS.<br><span>CERO ESPERA.</span>" data-en="FRESH CUTS.<br><span>ZERO WAIT.</span>">CORTES FRESCOS.<br><span>CERO ESPERA.</span></h1>
+    <p data-es="Fades precisos, barba definida y atención de primera — los 7 días de la semana." data-en="Sharp fades, clean beards and top service — 7 days a week.">Fades precisos, barba definida y atención de primera — los 7 días de la semana.</p>
+    <div class="stars">★★★★★ <small>5.0 · 61 reseñas en Google</small></div>
+    <div class="cta-row">
+      <a class="cta-book" href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20quiero%20reservar%20un%20corte" data-es="Reservar por WhatsApp" data-en="Book on WhatsApp">Reservar por WhatsApp</a>
+      <a class="cta-call" href="tel:+17868616791" data-es="Llamar" data-en="Call">Llamar</a>
+    </div>
+  </div>
+</div>
+
+<div class="strip"><div class="inner" id="strip">✂ CORTE &nbsp;·&nbsp; BARBA &nbsp;·&nbsp; AFEITADO &nbsp;·&nbsp; CEJAS &nbsp;·&nbsp; CORTE NIÑO &nbsp;·&nbsp; COLOR &nbsp;·&nbsp; ✂ CORTE &nbsp;·&nbsp; BARBA &nbsp;·&nbsp; AFEITADO &nbsp;·&nbsp; CEJAS &nbsp;·&nbsp; CORTE NIÑO &nbsp;·&nbsp; COLOR &nbsp;·&nbsp; </div></div>
+
+<main>
+
+<section>
+  <div class="kick" data-es="PRECIOS CLAROS" data-en="CLEAR PRICES">PRECIOS CLAROS</div>
+  <h2 data-es="Servicios" data-en="Services">Servicios</h2>
+  <p class="sub" data-es="Sin sorpresas. Pagas lo que ves." data-en="No surprises. What you see is what you pay.">Sin sorpresas. Pagas lo que ves.</p>
+
+  <div class="price-card hot">
+    <div class="n"><span class="badge" data-es="EL MÁS PEDIDO" data-en="MOST WANTED">EL MÁS PEDIDO</span><h3 data-es="Corte + Barba" data-en="Cut + Beard">Corte + Barba</h3><p data-es="Fade completo y barba definida" data-en="Full fade and sharp beard">Fade completo y barba definida</p></div>
+    <div class="p">$45<small data-es="muestra" data-en="sample">muestra</small></div>
+  </div>
+  <div class="price-card">
+    <div class="n"><h3 data-es="Corte de cabello" data-en="Haircut">Corte de cabello</h3><p data-es="Fade, crop, clásico — a tu estilo" data-en="Fade, crop, classic — your style">Fade, crop, clásico — a tu estilo</p></div>
+    <div class="p">$30<small data-es="muestra" data-en="sample">muestra</small></div>
+  </div>
+  <div class="price-card">
+    <div class="n"><h3 data-es="Corte de niño" data-en="Kids cut">Corte de niño</h3><p data-es="Paciencia y buen trato con los peques" data-en="Patient and friendly with kids">Paciencia y buen trato con los peques</p></div>
+    <div class="p">$25<small data-es="muestra" data-en="sample">muestra</small></div>
+  </div>
+  <div class="price-card">
+    <div class="n"><h3 data-es="Afeitado navaja" data-en="Straight-razor shave">Afeitado navaja</h3><p data-es="Al ras, con toalla caliente" data-en="Close shave with hot towel">Al ras, con toalla caliente</p></div>
+    <div class="p">$20<small data-es="muestra" data-en="sample">muestra</small></div>
+  </div>
+  <div class="price-card">
+    <div class="n"><h3 data-es="Arreglo de barba" data-en="Beard trim">Arreglo de barba</h3><p data-es="Perfilado y acondicionamiento" data-en="Shaping and conditioning">Perfilado y acondicionamiento</p></div>
+    <div class="p">$15<small data-es="muestra" data-en="sample">muestra</small></div>
+  </div>
+  <div class="price-card">
+    <div class="n"><h3 data-es="Cejas" data-en="Eyebrows">Cejas</h3><p data-es="Perfilado preciso" data-en="Precise shaping">Perfilado preciso</p></div>
+    <div class="p">$10<small data-es="muestra" data-en="sample">muestra</small></div>
+  </div>
+  <p class="sample-note" data-es="* Precios de muestra para la demostración." data-en="* Sample prices for demonstration.">* Precios de muestra para la demostración.</p>
+</section>
+
+<section>
+  <div class="open7">
+    <h2 data-es="ABIERTO LOS 7 DÍAS" data-en="OPEN 7 DAYS">ABIERTO LOS 7 DÍAS</h2>
+    <div class="big">7/7</div>
+    <p data-es="Lunes a sábado 9:00 AM – 7:30 PM · Domingos 10:00 AM – 7:00 PM. Cuando otras barberías cierran, nosotros seguimos recortando." data-en="Monday–Saturday 9:00 AM – 7:30 PM · Sundays 10:00 AM – 7:00 PM. When other shops close, we keep cutting.">Lunes a sábado 9:00 AM – 7:30 PM · Domingos 10:00 AM – 7:00 PM. Cuando otras barberías cierran, nosotros seguimos recortando.</p>
+  </div>
+  <div class="feat">
+    <div class="f"><div class="em">⭐</div><h3>5.0 en Google</h3><p data-es="61 reseñas, cero quejas" data-en="61 reviews, zero complaints">61 reseñas, cero quejas</p></div>
+    <div class="f"><div class="em">📲</div><h3 data-es="Reserva fácil" data-en="Easy booking">Reserva fácil</h3><p data-es="Por WhatsApp o llamada" data-en="Via WhatsApp or call">Por WhatsApp o llamada</p></div>
+    <div class="f"><div class="em">👦</div><h3 data-es="Niños welcome" data-en="Kids welcome">Niños welcome</h3><p data-es="Cortes para los peques" data-en="Cuts for the little ones">Cortes para los peques</p></div>
+    <div class="f"><div class="em">💈</div><h3 data-es="Servicio completo" data-en="Full service">Servicio completo</h3><p data-es="Corte, barba, cejas y color" data-en="Cut, beard, brows and color">Corte, barba, cejas y color</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="kick" data-es="TRABAJO REAL" data-en="REAL WORK">TRABAJO REAL</div>
+  <h2 data-es="Nuestros cortes" data-en="Our cuts">Nuestros cortes</h2>
+  <p class="sub" data-es="Fotos reales del local" data-en="Real shop photos">Fotos reales del local</p>
+  <div class="gal">
+    <img class="wide" src="imgs/fachada.jpg" alt="Willi Barbershop">
+    <img src="imgs/corte1.jpg" alt="Fade">
+    <img src="imgs/corte2.jpg" alt="Curly fade">
+  </div>
+</section>
+
+<section>
+  <div class="rev-box">
+    <div class="kick" data-es="REPUTACIÓN" data-en="REPUTATION">REPUTACIÓN</div>
+    <div class="n">5.0</div>
+    <div class="st">★★★★★</div>
+    <p data-es="61 reseñas en Google. La clientela habla por nosotros." data-en="61 Google reviews. Our clients speak for us.">61 reseñas en Google. La clientela habla por nosotros.</p>
+    <a href="https://www.google.com/maps/search/?api=1&query=Willi+Barbershop+Tampa+reviews" data-es="Ver reseñas" data-en="See reviews">Ver reseñas</a>
+  </div>
+</section>
+
+<section>
+  <div class="book">
+    <h2 data-es="Reserva tu silla <span>hoy</span>" data-en="Book your chair <span>today</span>">Reserva tu silla <span>hoy</span></h2>
+    <p data-es="Escríbenos por WhatsApp o llama. Sin citas complicadas." data-en="Message us on WhatsApp or call. No complicated booking.">Escríbenos por WhatsApp o llama. Sin citas complicadas.</p>
+    <div class="row">
+      <a class="b2" href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20quiero%20reservar%20un%20corte" data-es="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</a>
+      <a class="b1" href="tel:+17868616791" data-es="📞 Llamar" data-en="📞 Call">📞 Llamar</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick" data-es="HORARIO" data-en="HOURS">HORARIO</div>
+  <h2 data-es="🕖 Horario" data-en="🕖 Hours">🕖 Horario</h2>
+  <div class="hours" style="margin-top:14px;">
+    <table id="hours-table">
+      <tr><td data-es="Lunes" data-en="Monday">Lunes</td><td>9:00 AM – 7:30 PM</td></tr>
+      <tr><td data-es="Martes" data-en="Tuesday">Martes</td><td>9:00 AM – 7:30 PM</td></tr>
+      <tr><td data-es="Miércoles" data-en="Wednesday">Miércoles</td><td>9:00 AM – 7:30 PM</td></tr>
+      <tr><td data-es="Jueves" data-en="Thursday">Jueves</td><td>9:00 AM – 7:30 PM</td></tr>
+      <tr><td data-es="Viernes" data-en="Friday">Viernes</td><td>9:00 AM – 7:30 PM</td></tr>
+      <tr><td data-es="Sábado" data-en="Saturday">Sábado</td><td>9:00 AM – 7:30 PM</td></tr>
+      <tr><td data-es="Domingo" data-en="Sunday">Domingo</td><td>10:00 AM – 7:00 PM</td></tr>
+    </table>
+  </div>
+  <div class="info">
+    <p><strong>3405 W Columbus Dr, Tampa, FL 33607</strong></p>
+    <p><a class="tel" href="tel:+17868616791">(786) 861-6791</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="kick" data-es="GUARDA Y COMPARTE" data-en="SAVE & SHARE">GUARDA Y COMPARTE</div>
+  <h2 data-es="📱 Escanea y visítanos" data-en="📱 Scan & visit us">📱 Escanea y visítanos</h2>
+  <div class="qrs" style="margin-top:14px;">
+    <div class="qr"><img src="qr/qr-maps.png" alt="QR mapa"><p data-es="Cómo llegar" data-en="Directions">Cómo llegar</p></div>
+    <div class="qr"><img src="qr/qr-review.png" alt="QR reseña"><p data-es="Déjanos reseña" data-en="Leave a review">Déjanos reseña</p></div>
+    <div class="qr"><img src="qr/qr-web.png" alt="QR página"><p data-es="Guarda la página" data-en="Save this page">Guarda la página</p></div>
+  </div>
+</section>
+
+</main>
+
+<a class="fab" href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20quiero%20reservar%20un%20corte">💬</a>
+
+<footer>
+  <div class="logo">WILLI<span> BARBERSHOP</span></div>
+  <p style="margin-top:8px;">3405 W Columbus Dr, Tampa, FL 33607 · (786) 861-6791</p>
+</footer>
+
+<div class="demo-tag" data-es="Página de demostración creada por Lester Manzano · Precios de muestra" data-en="Demo page by Lester Manzano · Sample prices">Página de demostración creada por Lester Manzano · Precios de muestra</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-es]').forEach(function(el){
+    el.innerHTML = (l==='es') ? el.getAttribute('data-es') : el.getAttribute('data-en');
+  });
+  document.getElementById('btn-es').className = l==='es'?'on':'';
+  document.getElementById('btn-en').className = l==='en'?'on':'';
+  document.documentElement.lang = l;
+  try{ localStorage.setItem('willi_lang', l); }catch(e){}
+}
+(function(){
+  try{ var s = localStorage.getItem('willi_lang'); if(s==='en') setLang('en'); }catch(e){}
+  var d = new Date().getDay();
+  var idx = (d+6)%7;
+  var rows = document.getElementById('hours-table').rows;
+  if(rows[idx]) rows[idx].className = 'today';
+})();
+</script>
+</body>
+</html>
