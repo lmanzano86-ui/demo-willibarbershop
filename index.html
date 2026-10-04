@@ -42,6 +42,17 @@
   .price-card .p { font-size:1.5rem; font-weight:900; color:var(--gold); white-space:nowrap; }
   .price-card .p small { display:block; font-size:.62rem; color:var(--mut); font-weight:400; text-align:right; }
   .badge { display:inline-block; background:var(--gold); color:#111; font-size:.62rem; font-weight:900; letter-spacing:1px; border-radius:6px; padding:3px 9px; margin-bottom:6px; }
+
+  .price-card a.p { text-decoration:none; border:1.5px solid var(--gold); border-radius:12px; padding:8px 14px; display:block; text-align:center; transition:background .15s; }
+  .price-card a.p:hover { background:rgba(240,168,36,.12); }
+  .price-card .p .go { display:block; font-size:.62rem; color:var(--mut); font-weight:700; letter-spacing:1px; margin-top:2px; }
+  .walkin { display:inline-block; background:#25d366; color:#062b16; font-size:.78rem; font-weight:900; letter-spacing:1px; border-radius:20px; padding:7px 16px; margin-top:10px; }
+  .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .prod { background:var(--card); border:1px solid #26262b; border-radius:16px; padding:20px 12px; text-align:center; }
+  .prod .em { font-size:2.4rem; }
+  .prod h3 { font-size:.9rem; font-weight:800; margin:10px 0 2px; }
+  .prod .pr { color:var(--gold); font-weight:900; font-size:1.25rem; }
+  .prod a { display:inline-block; margin-top:12px; background:transparent; border:1.5px solid var(--gold); color:var(--gold); font-weight:800; font-size:.8rem; border-radius:20px; padding:9px 22px; text-decoration:none; }
   .sample-note { font-size:.75rem; color:#6f6a60; margin-top:12px; text-align:center; font-style:italic; }
   .open7 { background:linear-gradient(135deg,#f0a824,#d17f0e); border-radius:20px; padding:26px 22px; text-align:center; color:#111; }
   .open7 h2 { color:#111; }
@@ -104,6 +115,7 @@
     <h1 data-es="CORTES FRESCOS.<br><span>CERO ESPERA.</span>" data-en="FRESH CUTS.<br><span>ZERO WAIT.</span>">CORTES FRESCOS.<br><span>CERO ESPERA.</span></h1>
     <p data-es="Fades precisos, barba definida y atención de primera — los 7 días de la semana." data-en="Sharp fades, clean beards and top service — 7 days a week.">Fades precisos, barba definida y atención de primera — los 7 días de la semana.</p>
     <div class="stars">★★★★★ <small>5.0 · 180 reseñas en Booksy</small></div>
+    <div><span class="walkin" data-es="🚶 WALK-INS BIENVENIDOS" data-en="🚶 WALK-INS WELCOME">🚶 WALK-INS BIENVENIDOS</span></div>
     <div class="cta-row">
       <a class="cta-book" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa" data-es="Reservar en Booksy" data-en="Book on Booksy">Reservar en Booksy</a>
       <a class="cta-call" href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20quiero%20reservar%20un%20corte" data-es="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</a>
@@ -122,37 +134,54 @@
 
   <div class="price-card hot">
     <div class="n"><span class="badge" data-es="EL MÁS PEDIDO" data-en="MOST WANTED">EL MÁS PEDIDO</span><h3 data-es="Corte + Barba" data-en="Cut + Beard">Corte + Barba</h3><p data-es="Recorte de pelo y barba · cejas incluidas · 45 min" data-en="Haircut and beard · eyebrows included · 45 min">Recorte de pelo y barba · cejas incluidas · 45 min</p></div>
-    <div class="p">$40</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$40<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3>Fade</h3><p data-es="Degradado preciso · 35 min" data-en="Sharp fade · 35 min">Degradado preciso · 35 min</p></div>
-    <div class="p">$30</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$30<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3 data-es="Fade + trim arriba" data-en="Fade + trim on top">Fade + trim arriba</h3><p data-es="Degradado y arreglo arriba · 35 min" data-en="Fade with top trim · 35 min">Degradado y arreglo arriba · 35 min</p></div>
-    <div class="p">$35</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$35<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3 data-es="Corte de niño" data-en="Kids cut">Corte de niño</h3><p data-es="Con paciencia y estilo · 30 min" data-en="Patient, stylish cuts · 30 min">Con paciencia y estilo · 30 min</p></div>
-    <div class="p">$30</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$30<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3>Prime Service</h3><p data-es="Corte + barba + toalla caliente + masaje facial · 1 h" data-en="Cut + beard + hot towel + facial massage · 1 hr">Corte + barba + toalla caliente + masaje facial · 1 h</p></div>
-    <div class="p">$70+</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$70+<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3 data-es="Arreglo de barba" data-en="Beard trim">Arreglo de barba</h3><p data-es="Perfilado y recorte · 15 min" data-en="Line up and trim · 15 min">Perfilado y recorte · 15 min</p></div>
-    <div class="p">$20</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$20<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3>Line up</h3><p data-es="Contornos definidos · 15 min" data-en="Sharp lineup · 15 min">Contornos definidos · 15 min</p></div>
-    <div class="p">$15</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$15<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <div class="price-card">
     <div class="n"><h3 data-es="Afeitado" data-en="Shave">Afeitado</h3><p data-es="Al ras · 10 min" data-en="Close shave · 10 min">Al ras · 10 min</p></div>
-    <div class="p">$10</div>
+    <a class="p" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa">$10<span class="go" data-es="RESERVAR →" data-en="BOOK →">RESERVAR →</span></a>
   </div>
   <p class="sample-note" data-es="Precios reales publicados en su Booksy." data-en="Real prices from their Booksy.">Precios reales publicados en su Booksy.</p>
+</section>
+
+
+<section>
+  <div class="kick" data-es="TIENDA" data-en="SHOP">TIENDA</div>
+  <h2 data-es="🛍️ Productos y marca Willi" data-en="🛍️ Willi products & merch">🛍️ Productos y marca Willi</h2>
+  <p class="sub" data-es="Para el cabello, accesorios de barbería y ropa de la casa. Pide por WhatsApp y recógelo en el local." data-en="Hair products, barber accessories and house merch. Order on WhatsApp and pick up in-store.">Para el cabello, accesorios de barbería y ropa de la casa. Pide por WhatsApp y recógelo en el local.</p>
+  <div class="prod-grid">
+  <div class="prod"><div class="em">🧴</div><h3 data-es="Cera moldeadora" data-en="Styling wax">Cera moldeadora</h3><div class="pr">$18</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Cera%20moldeadora%20%28%2418%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  <div class="prod"><div class="em">🧔</div><h3 data-es="Aceite para barba" data-en="Beard oil">Aceite para barba</h3><div class="pr">$15</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Aceite%20para%20barba%20%28%2415%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  <div class="prod"><div class="em">🫧</div><h3 data-es="Shampoo para barba" data-en="Beard shampoo">Shampoo para barba</h3><div class="pr">$14</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Shampoo%20para%20barba%20%28%2414%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  <div class="prod"><div class="em">🪒</div><h3 data-es="Navaja clásica" data-en="Classic straight razor">Navaja clásica</h3><div class="pr">$25</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Navaja%20cl%C3%A1sica%20%28%2425%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  <div class="prod"><div class="em">✂️</div><h3 data-es="Set de peines pro" data-en="Pro comb set">Set de peines pro</h3><div class="pr">$20</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Set%20de%20peines%20pro%20%28%2420%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  <div class="prod"><div class="em">🧢</div><h3 data-es="Gorra Willi Barbershop" data-en="Willi Barbershop cap">Gorra Willi Barbershop</h3><div class="pr">$25</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Gorra%20Willi%20Barbershop%20%28%2425%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  <div class="prod"><div class="em">👕</div><h3 data-es="Camiseta Willi" data-en="Willi tee">Camiseta Willi</h3><div class="pr">$30</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Camiseta%20Willi%20%28%2430%29" data-es="Pedir" data-en="Order">Pedir</a></div>
+  </div>
+  <p class="sample-note" data-es="Productos y precios de muestra — se actualizan con tu inventario real." data-en="Sample products and prices — updated with your real inventory.">Productos y precios de muestra — se actualizan con tu inventario real.</p>
 </section>
 
 <section>
@@ -187,13 +216,14 @@
     <div class="st">★★★★★</div>
     <p data-es="180 reseñas en Booksy. La clientela habla por nosotros." data-en="180 Booksy reviews. Our clients speak for us.">180 reseñas en Booksy. La clientela habla por nosotros.</p>
     <a href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa" data-es="Ver en Booksy" data-en="See on Booksy">Ver en Booksy</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Willi+Barbershop+3405+W+Columbus+Dr+Tampa+FL+33607" style="background:var(--gold);color:#111;border-color:var(--gold);" data-es="⭐ Déjanos tu reseña en Google" data-en="⭐ Leave us a Google review">⭐ Déjanos tu reseña en Google</a>
   </div>
 </section>
 
 <section>
   <div class="book">
     <h2 data-es="Reserva tu silla <span>hoy</span>" data-en="Book your chair <span>today</span>">Reserva tu silla <span>hoy</span></h2>
-    <p data-es="Reserva en línea por Booksy, o escríbenos directo por WhatsApp." data-en="Book online with Booksy, or message us directly on WhatsApp.">Reserva en línea por Booksy, o escríbenos directo por WhatsApp.</p>
+    <p data-es="Reserva en línea por Booksy, o escríbenos directo por WhatsApp. <b style='color:#25d366'>🚶 Walk-ins disponibles</b> — sin cita también te atendemos." data-en="Book online with Booksy, or message us directly on WhatsApp. <b style='color:#25d366'>🚶 Walk-ins available</b> — no appointment needed.">Reserva en línea por Booksy, o escríbenos directo por WhatsApp. <b style="color:#25d366">🚶 Walk-ins disponibles</b> — sin cita también te atendemos.</p>
     <div class="row">
       <a class="b1" href="https://booksy.com/en-us/951263_willi-barbershop_barber-shop_15761_tampa" data-es="📅 Reservar en Booksy" data-en="📅 Book on Booksy">📅 Reservar en Booksy</a>
       <a class="b2" href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20quiero%20reservar%20un%20corte" data-es="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</a>
