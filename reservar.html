@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservar — Willi Barbershop</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; --green:#25d366; }
+  body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; min-height:100vh; }
+  header { background:rgba(13,13,15,.97); padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
+  header .logo { font-weight:900; font-size:1.1rem; letter-spacing:2px; color:#fff; }
+  header .logo span { color:var(--gold); }
+  .back { color:var(--gold); text-decoration:none; font-weight:800; font-size:.9rem; }
+  .lang button { border:1.5px solid var(--gold); background:transparent; color:var(--gold); font-weight:800; border-radius:20px; padding:6px 14px; font-size:.8rem; cursor:pointer; }
+  .lang button.on { background:var(--gold); color:#111; border-color:var(--gold); }
+  main { padding:24px 18px 60px; }
+  .steps { display:flex; gap:6px; margin-bottom:8px; }
+  .steps div { flex:1; height:6px; border-radius:3px; background:#26262b; }
+  .steps div.on { background:var(--gold); }
+  .step-label { font-size:.75rem; font-weight:900; letter-spacing:2px; color:var(--gold); margin-bottom:6px; }
+  h1 { font-size:1.6rem; font-weight:900; margin-bottom:4px; }
+  .sub { color:var(--mut); font-size:.9rem; margin-bottom:20px; }
+  .opt { background:var(--card); border:1.5px solid #26262b; border-radius:16px; padding:16px; margin-bottom:10px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:10px; transition:border .15s, background .15s; }
+  .opt.sel { border-color:var(--gold); background:#1d1708; }
+  .opt .t h3 { font-size:1rem; font-weight:800; }
+  .opt .t p { font-size:.8rem; color:var(--mut); margin-top:3px; }
+  .opt .pr { font-size:1.3rem; font-weight:900; color:var(--gold); white-space:nowrap; }
+  .opt .radio { width:22px; height:22px; border-radius:50%; border:2px solid #4a4a52; flex-shrink:0; }
+  .opt.sel .radio { border-color:var(--gold); background:var(--gold); box-shadow:inset 0 0 0 4px #1d1708; }
+  .avatar { width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#f0a824,#8a5c0e); color:#111; font-weight:900; font-size:1.3rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .nav { display:flex; gap:10px; margin-top:22px; }
+  .nav button { flex:1; border:none; border-radius:12px; padding:15px; font-weight:800; font-size:.95rem; cursor:pointer; }
+  .nav .next { background:var(--gold); color:#111; }
+  .nav .next:disabled { background:#3a3a40; color:#777; cursor:not-allowed; }
+  .nav .prev { background:#1e1e23; color:#fff; border:1px solid #33333a; }
+  .days { display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; margin-bottom:16px; }
+  .day { min-width:64px; background:var(--card); border:1.5px solid #26262b; border-radius:12px; padding:10px 6px; text-align:center; cursor:pointer; flex-shrink:0; }
+  .day.sel { border-color:var(--gold); background:#1d1708; }
+  .day .dw { font-size:.68rem; color:var(--mut); font-weight:800; letter-spacing:1px; }
+  .day.sel .dw { color:var(--gold); }
+  .day .dn { font-size:1.25rem; font-weight:900; margin-top:2px; }
+  .slots { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .slot { background:var(--card); border:1.5px solid #26262b; border-radius:10px; padding:12px 4px; text-align:center; font-weight:800; font-size:.88rem; cursor:pointer; }
+  .slot.sel { border-color:var(--gold); background:#1d1708; color:var(--gold); }
+  .slot.past { opacity:.3; pointer-events:none; }
+  .field { margin-bottom:14px; }
+  .field label { display:block; font-size:.8rem; font-weight:800; letter-spacing:1px; color:var(--mut); margin-bottom:6px; }
+  .field input { width:100%; background:var(--card); border:1.5px solid #26262b; border-radius:12px; padding:14px; color:#fff; font-size:1rem; }
+  .field input:focus { outline:none; border-color:var(--gold); }
+  .summary { background:var(--card); border:1px solid var(--gold); border-radius:16px; padding:20px; margin-bottom:6px; }
+  .summary .row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px dashed #2c2c33; font-size:.92rem; }
+  .summary .row:last-child { border:none; }
+  .summary .row span:first-child { color:var(--mut); }
+  .summary .row span:last-child { font-weight:800; text-align:right; }
+  .wa-btn { display:block; background:var(--green); color:#062b16; text-align:center; font-weight:900; border-radius:12px; padding:17px; font-size:1rem; text-decoration:none; margin-top:16px; }
+  .note { font-size:.75rem; color:#6f6a60; margin-top:14px; text-align:center; font-style:italic; }
+  .done { text-align:center; padding:40px 10px; }
+  .done .big { font-size:3.5rem; }
+  .done h2 { margin:12px 0 8px; }
+  .done p { color:var(--mut); font-size:.92rem; }
+  footer { text-align:center; padding:24px; font-size:.78rem; color:#6f6a60; }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="index.html" data-es="← Volver" data-en="← Back">← Volver</a>
+  <div class="logo">WILLI<span> BARBERSHOP</span></div>
+  <div class="lang">
+    <button id="btn-es" class="on" onclick="setLang('es')">ES</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<main>
+  <div class="steps" id="steps"><div class="on"></div><div></div><div></div><div></div></div>
+  <div class="step-label" id="stepLabel"></div>
+  <h1 id="stepTitle"></h1>
+  <p class="sub" id="stepSub"></p>
+  <div id="stepBody"></div>
+  <div class="nav" id="stepNav"></div>
+  <p class="note" id="sampleNote" style="display:none" data-es="Perfiles de muestra — se actualizan con tu equipo real." data-en="Sample profiles — updated with your real team.">Perfiles de muestra — se actualizan con tu equipo real.</p>
+</main>
+
+<footer>Willi Barbershop · 3405 W Columbus Dr, Tampa, FL · (786) 861-6791</footer>
+
+<script>
+const WA_NUMBER = '17868616791';
+let lang = 'es';
+const T = (es,en) => lang==='es' ? es : en;
+
+const SERVICES = [
+  {id:'corte-barba', es:'Corte + Barba', en:'Cut + Beard', des:{es:'Recorte de pelo y barba · cejas incluidas · 45 min', en:'Haircut and beard · eyebrows included · 45 min'}, price:'$40', hot:true},
+  {id:'fade', es:'Fade', en:'Fade', des:{es:'Degradado preciso · 35 min', en:'Sharp fade · 35 min'}, price:'$30'},
+  {id:'fade-trim', es:'Fade + trim arriba', en:'Fade + top trim', des:{es:'Degradado y arreglo arriba · 35 min', en:'Fade with top trim · 35 min'}, price:'$35'},
+  {id:'nino', es:'Corte de niño', en:'Kids cut', des:{es:'Con paciencia y estilo · 30 min', en:'Patient, stylish cuts · 30 min'}, price:'$30'},
+  {id:'prime', es:'Prime Service', en:'Prime Service', des:{es:'Corte + barba + toalla caliente + masaje facial · 1 h', en:'Cut + beard + hot towel + facial massage · 1 hr'}, price:'$70+'},
+  {id:'barba', es:'Arreglo de barba', en:'Beard trim', des:{es:'Perfilado y recorte · 15 min', en:'Line up and trim · 15 min'}, price:'$20'},
+  {id:'lineup', es:'Line up', en:'Line up', des:{es:'Contornos definidos · 15 min', en:'Sharp lineup · 15 min'}, price:'$15'},
+  {id:'afeitado', es:'Afeitado', en:'Shave', des:{es:'Al ras · 10 min', en:'Close shave · 10 min'}, price:'$10'},
+];
+const BARBERS = [
+  {id:'williams', name:'Williams', role:{es:'Master Barber', en:'Master Barber'}, spec:{es:'Especialista en fades', en:'Fade specialist'}, rating:'5.0'},
+  {id:'marco', name:'Marco', sample:true, role:{es:'Barbero', en:'Barber'}, spec:{es:'Cortes clásicos y barba', en:'Classic cuts & beard'}, rating:'5.0'},
+  {id:'dre', name:'Dre', sample:true, role:{es:'Barbero', en:'Barber'}, spec:{es:'Diseños y color', en:'Designs & color'}, rating:'4.9'},
+  {id:'junior', name:'Junior', sample:true, role:{es:'Barbero', en:'Barber'}, spec:{es:'Afeitado clásico', en:'Classic shave'}, rating:'5.0'},
+  {id:'alex', name:'Alex', sample:true, role:{es:'Barbero', en:'Barber'}, spec:{es:'Cortes de niño', en:'Kids cuts'}, rating:'4.8'},
+  {id:'leo', name:'Leo', sample:true, role:{es:'Barbero', en:'Barber'}, spec:{es:'Fades y line ups', en:'Fades & line ups'}, rating:'5.0'},
+  {id:'any', name:{es:'Primer disponible', en:'First available'}, role:{es:'El que esté libre', en:'Whoever is free'}, spec:{es:'Sin espera', en:'No wait'}, rating:''},
+];
+const DOW_ES = ['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'];
+const DOW_EN = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+const MON_ES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const MON_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const state = { step:1, service:null, barber:null, date:null, time:null, name:'', phone:'' };
+try {
+  const pre = new URLSearchParams(location.search).get('servicio');
+  if (pre) { const s = SERVICES.find(x=>x.id===pre); if (s) { state.service = s.id; state.step = 2; } }
+} catch(e){}
+
+const $ = id => document.getElementById(id);
+const svc = id => SERVICES.find(x=>x.id===id);
+const brb = id => BARBERS.find(x=>x.id===id);
+const bname = b => typeof b.name==='string' ? b.name : T(b.name.es, b.name.en);
+
+function slotsFor(d){
+  const day = d.getDay();
+  const open = day===0 ? 600 : 540;      // dom 10:00, lun–sáb 9:00
+  const close = day===0 ? 1140 : 1170;   // dom 19:00, lun–sáb 19:30
+  const out = [];
+  for(let t=open; t+30<=close; t+=30) out.push(t);
+  return out;
+}
+function fmtTime(mins){
+  let h = Math.floor(mins/60), m = mins%60, ap = h>=12?'PM':'AM', hh = h%12; if(hh===0) hh=12;
+  return hh+':'+String(m).padStart(2,'0')+' '+ap;
+}
+function fmtDate(d){
+  return DOW_ES[d.getDay()]+' '+d.getDate()+' '+MON_ES[d.getMonth()];
+}
+function fmtDateEn(d){
+  return DOW_EN[d.getDay()]+' '+MON_EN[d.getMonth()]+' '+d.getDate();
+}
+function nextDays(n){
+  const out=[]; const t=new Date();
+  for(let i=0;i<n;i++){ const d=new Date(t); d.setDate(t.getDate()+i); out.push(d); }
+  return out;
+}
+function isPast(d, mins){
+  const now=new Date();
+  if(d.toDateString()!==now.toDateString()) return false;
+  return (d.getHours()*60+d.getMinutes()) >= mins-15;
+}
+
+function render(){
+  const dots = $('steps').children;
+  for(let i=0;i<4;i++) dots[i].className = i < state.step ? 'on' : '';
+  $('sampleNote').style.display = state.step===2 ? 'block' : 'none';
+  const labels = [T('PASO 1 DE 4','STEP 1 OF 4'),T('PASO 2 DE 4','STEP 2 OF 4'),T('PASO 3 DE 4','STEP 3 OF 4'),T('PASO 4 DE 4','STEP 4 OF 4')];
+  const titles = [T('Elige tu servicio','Choose your service'),T('Elige tu barbero','Choose your barber'),T('Elige día y hora','Choose day & time'),T('Confirma tu reserva','Confirm your booking')];
+  const subs = [T('Toca el servicio que quieres reservar.','Tap the service you want to book.'),T('¿Con quién te atendemos? (opcional)','Who will take care of you? (optional)'),T('Abierto los 7 días.','Open 7 days a week.'),T('Revisa y confirma por WhatsApp.','Review and confirm via WhatsApp.')];
+  $('stepLabel').textContent = labels[state.step-1];
+  $('stepTitle').textContent = titles[state.step-1];
+  $('stepSub').textContent = subs[state.step-1];
+  const body = $('stepBody'), nav = $('stepNav');
+  body.innerHTML=''; nav.innerHTML='';
+
+  if(state.step===1){
+    SERVICES.forEach(s=>{
+      const d=document.createElement('div');
+      d.className='opt'+(state.service===s.id?' sel':'');
+      d.innerHTML='<div class="t"><h3>'+T(s.es,s.en)+'</h3><p>'+T(s.des.es,s.des.en)+'</p></div><div class="pr">'+s.price+'</div><div class="radio"></div>';
+      d.onclick=()=>{ state.service=s.id; render(); };
+      body.appendChild(d);
+    });
+  }
+  if(state.step===2){
+    BARBERS.forEach(b=>{
+      const d=document.createElement('div');
+      d.className='opt'+(state.barber===b.id?' sel':'');
+      const initials = typeof b.name==='string' ? b.name.slice(0,1).toUpperCase() : '★';
+      d.innerHTML='<div class="avatar">'+initials+'</div><div class="t" style="flex:1"><h3>'+bname(b)+(b.sample?' <small style="color:var(--mut)">· '+T('muestra','sample')+'</small>':'')+'</h3><p>'+T(b.role.es,b.role.en)+' · '+T(b.spec.es,b.spec.en)+(b.rating?' · ⭐ '+b.rating:'')+'</p></div><div class="radio"></div>';
+      d.onclick=()=>{ state.barber=b.id; render(); };
+      body.appendChild(d);
+    });
+  }
+  if(state.step===3){
+    const daysEl=document.createElement('div'); daysEl.className='days';
+    nextDays(14).forEach(d=>{
+      const el=document.createElement('div');
+      el.className='day'+(state.date && d.toDateString()===state.date.toDateString()?' sel':'');
+      el.innerHTML='<div class="dw">'+T(DOW_ES[d.getDay()],DOW_EN[d.getDay()])+'</div><div class="dn">'+d.getDate()+'</div>';
+      el.onclick=()=>{ state.date=d; state.time=null; render(); };
+      daysEl.appendChild(el);
+    });
+    body.appendChild(daysEl);
+    if(state.date){
+      const g=document.createElement('div'); g.className='slots';
+      slotsFor(state.date).forEach(t=>{
+        const s=document.createElement('div');
+        s.className='slot'+(state.time===t?' sel':'')+(isPast(state.date,t)?' past':'');
+        s.textContent=fmtTime(t);
+        s.onclick=()=>{ state.time=t; render(); };
+        g.appendChild(s);
+      });
+      body.appendChild(g);
+    } else {
+      const p=document.createElement('p'); p.style.color='var(--mut)'; p.style.fontSize='.9rem';
+      p.textContent=T('Primero elige un día ↑','Choose a day first ↑'); body.appendChild(p);
+    }
+  }
+  if(state.step===4){
+    const s=svc(state.service), b=brb(state.barber);
+    const sum=document.createElement('div'); sum.className='summary';
+    const rows=[
+      [T('✂️ Servicio','✂️ Service'), T(s.es,s.en)+' · '+s.price],
+      [T('💈 Barbero','💈 Barber'), bname(b)],
+      [T('📅 Fecha','📅 Date'), lang==='es'?fmtDate(state.date):fmtDateEn(state.date)],
+      [T('🕐 Hora','🕐 Time'), fmtTime(state.time)],
+    ];
+    sum.innerHTML=rows.map(r=>'<div class="row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>').join('');
+    body.appendChild(sum);
+    [['name',T('Tu nombre','Your name'),'text'],['phone',T('Tu teléfono','Your phone'),'tel']].forEach(f=>{
+      const w=document.createElement('div'); w.className='field';
+      w.innerHTML='<label>'+f[1].toUpperCase()+'</label><input id="f_'+f[0]+'" type="'+f[2]+'" value="'+state[f[0]]+'" placeholder="'+f[1]+'">';
+      body.appendChild(w);
+    });
+    $('f_name').oninput=e=>state.name=e.target.value;
+    $('f_phone').oninput=e=>state.phone=e.target.value;
+    const a=document.createElement('a'); a.className='wa-btn'; a.id='waConfirm';
+    a.textContent='💬 '+T('Confirmar reserva por WhatsApp','Confirm booking via WhatsApp');
+    a.onclick=confirmBooking; body.appendChild(a);
+  }
+
+  // nav
+  if(state.step>1){
+    const p=document.createElement('button'); p.className='prev'; p.textContent=T('← Atrás','← Back');
+    p.onclick=()=>{ state.step--; render(); }; nav.appendChild(p);
+  }
+  if(state.step<4){
+    const n=document.createElement('button'); n.className='next'; n.textContent=T('Continuar →','Continue →');
+    n.disabled = !canNext();
+    n.onclick=()=>{ if(canNext()){ if(state.step===2 && !state.barber) state.barber='any'; state.step++; render(); } };
+    nav.appendChild(n);
+  }
+}
+function canNext(){
+  if(state.step===1) return !!state.service;
+  if(state.step===2) return true;
+  if(state.step===3) return !!state.date && state.time!==null;
+  return true;
+}
+function confirmBooking(){
+  if(!state.name.trim() || !state.phone.trim()){ alert(T('Escribe tu nombre y teléfono para confirmar.','Enter your name and phone to confirm.')); return; }
+  const s=svc(state.service), b=brb(state.barber);
+  const msg = 'Hola Willi Barbershop, quiero reservar:%0A'
+    + '✂️ '+encodeURIComponent(T('Servicio','Service'))+': '+encodeURIComponent(T(s.es,s.en)+' ('+s.price+')')+'%0A'
+    + '💈 '+encodeURIComponent(T('Barbero','Barber'))+': '+encodeURIComponent(bname(b))+'%0A'
+    + '📅 '+encodeURIComponent(T('Fecha','Date'))+': '+encodeURIComponent(fmtDate(state.date))+'%0A'
+    + '🕐 '+encodeURIComponent(T('Hora','Time'))+': '+encodeURIComponent(fmtTime(state.time))+'%0A'
+    + '👤 '+encodeURIComponent(T('Nombre','Name'))+': '+encodeURIComponent(state.name)+'%0A'
+    + '📞 '+encodeURIComponent(T('Teléfono','Phone'))+': '+encodeURIComponent(state.phone);
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+msg, '_blank');
+  $('stepBody').innerHTML='<div class="done"><div class="big">✅</div><h2>'+T('¡Casi listo!','Almost done!')+'</h2><p>'+T('Se abrió WhatsApp con tu reserva lista. Solo dale enviar y te confirmamos.','WhatsApp opened with your booking ready. Just hit send and we will confirm.')+'</p></div>';
+  $('stepNav').innerHTML='';
+}
+
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('[data-es]').forEach(el=>{ el.innerHTML = el.dataset[lang]; });
+  $('btn-es').className = l==='es'?'on':''; $('btn-en').className = l==='en'?'on':'';
+  document.documentElement.lang = l;
+  render();
+}
+render();
+</script>
+</body>
+</html>
