@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temáticas — Uso interno · Willi Barbershop</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; --naranja:#ff7a1a; --morado:#b26bff; }
+  body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; padding:34px 18px 60px; }
+  .logo { font-weight:900; font-size:1.3rem; letter-spacing:2px; color:#fff; }
+  .logo span { color:var(--gold); }
+  .kick { font-size:.72rem; font-weight:900; letter-spacing:3px; color:var(--gold); margin:30px 0 8px; }
+  h1 { font-size:1.8rem; font-weight:900; letter-spacing:-.5px; }
+  p { color:var(--mut); font-size:.93rem; line-height:1.55; margin-top:12px; }
+  p strong { color:var(--txt); }
+  code { background:#1e1e23; border:1px solid #33333a; border-radius:6px; padding:1px 7px; font-size:.85em; color:var(--gold); }
+  .tema-btn { display:block; width:100%; text-align:left; background:var(--card); border:1.5px solid #26262b; border-radius:16px; padding:18px; margin-top:12px; cursor:pointer; color:var(--txt); font-family:inherit; }
+  .tema-btn:hover { border-color:var(--gold); }
+  .tema-btn .t { font-size:1.1rem; font-weight:900; display:block; }
+  .tema-btn .d { font-size:.83rem; color:var(--mut); display:block; margin-top:4px; }
+  .tema-btn.hw { border-color:rgba(255,122,26,.55); box-shadow:0 0 14px rgba(255,122,26,.35), 0 0 30px rgba(178,107,255,.18); }
+  .tema-btn.hw .t { text-shadow:0 0 8px rgba(255,122,26,.9), 0 0 20px rgba(178,107,255,.6); }
+  .estado { background:var(--card); border:1px solid #26262b; border-radius:14px; padding:16px 18px; margin-top:22px; font-size:.9rem; }
+  .estado p { margin-top:6px; }
+  .estado p:first-child { margin-top:0; }
+  a.volver { display:inline-block; margin-top:26px; color:var(--gold); font-weight:800; text-decoration:none; border:1.5px solid var(--gold); border-radius:30px; padding:11px 26px; font-size:.9rem; }
+</style>
+</head>
+<body>
+
+<div class="logo">WILLI<span> BARBERSHOP</span></div>
+
+<div class="kick">USO INTERNO</div>
+<h1>Temáticas de la página</h1>
+
+<p>Esta página <strong>no se ve en el front</strong>: no está enlazada desde la página pública ni aparece en buscadores. Sirve para <strong>previsualizar y cambiar la temática en este navegador</strong>.</p>
+
+<button class="tema-btn" onclick="elegirTema('normal')">
+  <span class="t">✂️ Tema normal</span>
+  <span class="d">La página de siempre: negro y dorado, sin decoración de temporada.</span>
+</button>
+
+<button class="tema-btn hw" onclick="elegirTema('halloween')">
+  <span class="t">🎃 Tema Halloween</span>
+  <span class="d">Luces de neón naranja y morado, calaveras barberas, murciélagos con el pelo pintado y calabazas con barba.</span>
+</button>
+
+<div class="estado">
+  <p>Tema activo <strong>en este navegador</strong>: <code id="actual-navegador">—</code></p>
+  <p>Tema que ve <strong>todo el público</strong>: <code id="actual-publico">—</code></p>
+</div>
+
+<p>⚠️ Los botones de arriba solo cambian lo que se ve <strong>en este navegador</strong> (queda guardado en él). Para cambiar la temática <strong>para todo el público</strong> hay que editar la variable <code>TEMA_POR_DEFECTO</code> del archivo <code>temas.js</code> y republicar: <strong>pedírselo a Tiky</strong> («pon el tema Halloween», «vuelve al tema normal»…).</p>
+
+<a class="volver" href="index.html">← Ver la página principal</a>
+
+<script src="temas.js"></script>
+<script>
+function elegirTema(t){
+  try{ localStorage.setItem('willi-tema', t); }catch(e){}
+  location.href = 'index.html?tema=' + t;
+}
+(function(){
+  var nav = 'sin elegir (manda el de todo el público)';
+  try{
+    var s = localStorage.getItem('willi-tema');
+    if(s && WILLI_TEMAS.indexOf(s) !== -1) nav = s;
+  }catch(e){}
+  document.getElementById('actual-navegador').textContent = nav;
+  document.getElementById('actual-publico').textContent = TEMA_POR_DEFECTO;
+})();
+</script>
+</body>
+</html>

@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://lmanzano86-ui.github.io/demo-willibarbershop/sitemap.xml
+Disallow: /temas.html
+Sitemap: https://willibarbershop.com/sitemap.xml
