@@ -9,12 +9,13 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; --naranja:#ff7a1a; --morado:#b26bff; }
+  :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; --naranja:#ff7a1a; --morado:#b26bff; --ok:#37c978; --err:#ff6b6b; }
   body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; padding:34px 18px 60px; }
   .logo { font-weight:900; font-size:1.3rem; letter-spacing:2px; color:#fff; }
   .logo span { color:var(--gold); }
   .kick { font-size:.72rem; font-weight:900; letter-spacing:3px; color:var(--gold); margin:30px 0 8px; }
   h1 { font-size:1.8rem; font-weight:900; letter-spacing:-.5px; }
+  h2 { font-size:1.05rem; font-weight:900; margin-top:30px; }
   p { color:var(--mut); font-size:.93rem; line-height:1.55; margin-top:12px; }
   p strong { color:var(--txt); }
   code { background:#1e1e23; border:1px solid #33333a; border-radius:6px; padding:1px 7px; font-size:.85em; color:var(--gold); }
@@ -27,6 +28,14 @@
   .estado { background:var(--card); border:1px solid #26262b; border-radius:14px; padding:16px 18px; margin-top:22px; font-size:.9rem; }
   .estado p { margin-top:6px; }
   .estado p:first-child { margin-top:0; }
+  .msg { display:none; border-radius:14px; padding:14px 18px; margin-top:16px; font-size:.92rem; font-weight:700; }
+  .msg.ok  { display:block; background:rgba(55,201,120,.12); border:1.5px solid var(--ok); color:#b8f2d2; }
+  .msg.err { display:block; background:rgba(255,107,107,.10); border:1.5px solid var(--err); color:#ffc9c9; }
+  label.clave { display:block; margin-top:16px; font-size:.85rem; color:var(--mut); }
+  input.clave { width:100%; margin-top:6px; background:var(--card); border:1.5px solid #26262b; border-radius:12px; padding:13px 15px; color:var(--txt); font-family:inherit; font-size:1rem; }
+  input.clave:focus { outline:none; border-color:var(--gold); }
+  .prev { margin-top:12px; font-size:.92rem; }
+  .prev a { color:var(--gold); font-weight:800; text-decoration:none; margin-right:16px; }
   a.volver { display:inline-block; margin-top:26px; color:var(--gold); font-weight:800; text-decoration:none; border:1.5px solid var(--gold); border-radius:30px; padding:11px 26px; font-size:.9rem; }
 </style>
 </head>
@@ -37,41 +46,94 @@
 <div class="kick">USO INTERNO</div>
 <h1>Temáticas de la página</h1>
 
-<p>Esta página <strong>no se ve en el front</strong>: no está enlazada desde la página pública ni aparece en buscadores. Sirve para <strong>previsualizar y cambiar la temática en este navegador</strong>.</p>
+<p>Esta página <strong>no se ve en el front</strong>: no está enlazada desde la página pública ni aparece en buscadores. Es el <strong>panel del Módulo de Temáticas</strong>: desde aquí se cambia la temática <strong>para TODO el público</strong>. El cambio se guarda en el servidor y aplica en todos los navegadores al cargar la página — ya no hace falta republicar.</p>
 
-<button class="tema-btn" onclick="elegirTema('normal')">
-  <span class="t">✂️ Tema normal</span>
+<div class="estado">
+  <p>Tema que ve <strong>todo el público</strong> (leído del servidor): <code id="actual-publico">consultando…</code></p>
+  <p>Tema en <strong>este navegador</strong> al abrir la página: <code id="actual-navegador">—</code></p>
+</div>
+
+<label class="clave" for="clave">Clave del panel (se pide una vez por sesión; nunca queda en el código)
+  <input class="clave" type="password" id="clave" autocomplete="off" placeholder="••••••••">
+</label>
+
+<button class="tema-btn" data-fijar="normal">
+  <span class="t">✂️ Tema normal — para todo el público</span>
   <span class="d">La página de siempre: negro y dorado, sin decoración de temporada.</span>
 </button>
 
-<button class="tema-btn hw" onclick="elegirTema('halloween')">
-  <span class="t">🎃 Tema Halloween</span>
+<button class="tema-btn hw" data-fijar="halloween">
+  <span class="t">🎃 Tema Halloween — para todo el público</span>
   <span class="d">Luces de neón naranja y morado, calaveras barberas, murciélagos con el pelo pintado y calabazas con barba.</span>
 </button>
 
-<div class="estado">
-  <p>Tema activo <strong>en este navegador</strong>: <code id="actual-navegador">—</code></p>
-  <p>Tema que ve <strong>todo el público</strong>: <code id="actual-publico">—</code></p>
-</div>
+<div class="msg" id="msg" role="status"></div>
 
-<p>⚠️ Los botones de arriba solo cambian lo que se ve <strong>en este navegador</strong> (queda guardado en él). Para cambiar la temática <strong>para todo el público</strong> hay que editar la variable <code>TEMA_POR_DEFECTO</code> del archivo <code>temas.js</code> y republicar: <strong>pedírselo a Tiky</strong> («pon el tema Halloween», «vuelve al tema normal»…).</p>
+<h2>Previsualizar (solo este navegador)</h2>
+<p>Estos enlaces abren la página con un tema de muestra <strong>solo para ti</strong>: sirven para ver cómo queda antes de cambiarlo para todos, y <strong>no</strong> cambian lo que ve el público.</p>
+<p class="prev">
+  <a href="index.html?tema=normal">👁 normal</a>
+  <a href="index.html?tema=halloween">👁 halloween</a>
+</p>
 
 <a class="volver" href="index.html">← Ver la página principal</a>
 
-<script src="temas.js"></script>
 <script>
-function elegirTema(t){
-  try{ localStorage.setItem('willi-tema', t); }catch(e){}
-  location.href = 'index.html?tema=' + t;
-}
-(function(){
-  var nav = 'sin elegir (manda el de todo el público)';
-  try{
-    var s = localStorage.getItem('willi-tema');
-    if(s && WILLI_TEMAS.indexOf(s) !== -1) nav = s;
-  }catch(e){}
-  document.getElementById('actual-navegador').textContent = nav;
-  document.getElementById('actual-publico').textContent = TEMA_POR_DEFECTO;
+window.MODULO_TEMAS = {
+  sitio: 'willi-barbershop',
+  defecto: 'halloween',
+  temas: ['normal', 'halloween'],
+  supabaseUrl: 'https://ildviocjmqcyfknzlyrm.supabase.co',
+  anonKey: 'sb_publishable_b6X_FUcoooXAvUWI6UXT-g_Zu4ZHi0g'
+};
+</script>
+<script src="modulo-temas.js"></script>
+<script>
+(function () {
+  var msg = document.getElementById('msg');
+  var pub = document.getElementById('actual-publico');
+  var inp = document.getElementById('clave');
+
+  document.getElementById('actual-navegador').textContent =
+    document.documentElement.getAttribute('data-tema') || '(el del público)';
+
+  /* La clave vive SOLO en sessionStorage (se borra al cerrar la pestaña). */
+  try {
+    var guardada = sessionStorage.getItem('mt-clave');
+    if (guardada) inp.value = guardada;
+  } catch (e) {}
+  inp.addEventListener('change', function () {
+    try { sessionStorage.setItem('mt-clave', inp.value); } catch (e) {}
+  });
+
+  function mostrar(ok, texto) {
+    msg.className = 'msg ' + (ok ? 'ok' : 'err');
+    msg.textContent = texto;
+  }
+  function refrescarPublico() {
+    pub.textContent = 'consultando…';
+    window.ModuloTemas.actual().then(function (t) {
+      pub.textContent = t || '(sin respuesta del servidor: manda el tema por defecto, halloween)';
+    });
+  }
+
+  document.querySelectorAll('[data-fijar]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var tema = b.getAttribute('data-fijar');
+      var clave = inp.value.trim();
+      if (!clave) { mostrar(false, 'Escribe primero la clave del panel.'); inp.focus(); return; }
+      try { sessionStorage.setItem('mt-clave', clave); } catch (e) {}
+      mostrar(true, 'Guardando el tema «' + tema + '» para todo el público…');
+      window.ModuloTemas.fijar(tema, clave).then(function () {
+        mostrar(true, '✅ Listo: TODO el público verá el tema «' + tema + '» al cargar la página.');
+        refrescarPublico();
+      }).catch(function (err) {
+        mostrar(false, '❌ No se pudo cambiar: ' + (err && err.message ? err.message : err));
+      });
+    });
+  });
+
+  refrescarPublico();
 })();
 </script>
 </body>

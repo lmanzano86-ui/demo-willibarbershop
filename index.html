@@ -17,21 +17,19 @@
 <meta name="twitter:title" content="Willi Barbershop — Tampa, FL">
 <meta name="twitter:description" content="Barbería en Tampa abierta los 7 días: fades, corte + barba y afeitado. Reserva por Booksy, WhatsApp o en línea.">
 <meta name="twitter:image" content="https://willibarbershop.com/imgs/fachada.jpg">
-<script src="temas.js"></script>
 <script>
-/* Aplica la temática ANTES de pintar: ?tema= > elección guardada > TEMA_POR_DEFECTO (temas.js).
-   Página interna de cambio (no enlazada desde el front): temas.html */
-(function(){
-  var t = null;
-  try{
-    var q = new URLSearchParams(location.search).get('tema');
-    if(q && WILLI_TEMAS.indexOf(q) !== -1){ t = q; localStorage.setItem('willi-tema', t); }
-    if(!t){ var s = localStorage.getItem('willi-tema'); if(s && WILLI_TEMAS.indexOf(s) !== -1) t = s; }
-  }catch(e){}
-  if(!t) t = (typeof TEMA_POR_DEFECTO !== 'undefined') ? TEMA_POR_DEFECTO : 'normal';
-  document.documentElement.setAttribute('data-tema', t);
-})();
+/* MÓDULO DE TEMÁTICAS (~/workspace/modulo-temas/): el tema lo decide el
+   servidor (Supabase) y aplica a TODO el público. Panel interno de cambio
+   (no enlazado desde el front): temas.html */
+window.MODULO_TEMAS = {
+  sitio: 'willi-barbershop',
+  defecto: 'halloween',
+  temas: ['normal', 'halloween'],
+  supabaseUrl: 'https://ildviocjmqcyfknzlyrm.supabase.co',
+  anonKey: 'sb_publishable_b6X_FUcoooXAvUWI6UXT-g_Zu4ZHi0g'
+};
 </script>
+<script src="modulo-temas.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -155,7 +153,7 @@
   footer .logo span { color:var(--gold); }
   .demo-tag { background:#3a2f10; color:#d8b45a; text-align:center; font-size:.75rem; padding:8px; }
 
-  /* ============ TEMÁTICAS — control en temas.js (interno: temas.html) ============ */
+  /* ============ TEMÁTICAS — Módulo de Temáticas: tema central en el servidor (panel interno: temas.html) ============ */
   /* La sección Halloween solo existe en pantalla con el tema halloween activo */
   #halloween { display:none; }
   html[data-tema="halloween"] #halloween { display:block; }
