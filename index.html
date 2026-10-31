@@ -57,9 +57,10 @@ window.MODULO_TEMAS = {
   * { margin:0; padding:0; box-sizing:border-box; }
   :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; }
   body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; }
-  header { background:rgba(13,13,15,.95); padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
-  header .logo { font-weight:900; font-size:1.35rem; letter-spacing:2px; color:#fff; }
-  header .logo span { color:var(--gold); }
+  header { background:#000; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
+  header .logo { display:block; line-height:0; }
+  header .logo img { height:54px; width:auto; display:block; }
+  @media (max-width:480px) { header .logo img { height:46px; } }
   .lang button { border:1.5px solid var(--gold); background:transparent; color:var(--gold); font-weight:800; border-radius:20px; padding:6px 14px; font-size:.8rem; cursor:pointer; }
   .lang button.on { background:var(--gold); color:#111; border-color:var(--gold); }
   .hero { position:relative; }
@@ -148,9 +149,9 @@ window.MODULO_TEMAS = {
   .info p { color:var(--mut); font-size:.9rem; margin:6px 0; }
   .info .tel { font-size:1.5rem; font-weight:900; color:var(--gold); text-decoration:none; letter-spacing:1px; }
   .fab { position:fixed; bottom:18px; right:18px; width:58px; height:58px; border-radius:50%; background:#25d366; display:flex; align-items:center; justify-content:center; font-size:1.7rem; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.5); z-index:99; }
-  footer { background:#08080a; text-align:center; padding:28px 18px 96px; font-size:.82rem; color:#6f6a60; border-top:1px solid #1e1e23; }
-  footer .logo { font-weight:900; letter-spacing:2px; color:#fff; font-size:1.1rem; }
-  footer .logo span { color:var(--gold); }
+  footer { background:#000; text-align:center; padding:28px 18px 96px; font-size:.82rem; color:#6f6a60; border-top:1px solid #1e1e23; }
+  footer .logo { line-height:0; }
+  footer .logo img { height:120px; width:auto; display:inline-block; }
   .demo-tag { background:#3a2f10; color:#d8b45a; text-align:center; font-size:.75rem; padding:8px; }
 
   /* ============ TEMÁTICAS — Módulo de Temáticas: tema central en el servidor (panel interno: temas.html) ============ */
@@ -191,7 +192,7 @@ window.MODULO_TEMAS = {
 <body>
 
 <header>
-  <div class="logo">WILLI<span> BARBERSHOP</span></div>
+  <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396"></a>
   <div class="lang">
     <button id="btn-es" class="on" onclick="setLang('es')">ES</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
@@ -398,7 +399,7 @@ window.MODULO_TEMAS = {
 <a class="fab" href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20quiero%20reservar%20un%20corte">💬</a>
 
 <footer>
-  <div class="logo">WILLI<span> BARBERSHOP</span></div>
+  <div class="logo"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396" loading="lazy" decoding="async"></div>
   <p style="margin-top:8px;">3405 W Columbus Dr, Tampa, FL 33607 · (786) 861-6791</p>
 </footer>
 
