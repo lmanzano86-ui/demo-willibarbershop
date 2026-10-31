@@ -58,18 +58,10 @@ window.MODULO_TEMAS = {
   :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; }
   body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; }
   header { background:#000; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
-  header .logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
-  header .logo img { height:54px; width:auto; display:block; }
-  /* Nombre junto al logo: mismo esquema tricolor del panel (temas.html) — «WILLI» blanco, «BARBERSHOP» azul #5b8def y filete rojo #c91111. Vive en el CSS base (sin reglas [data-tema]): se ve igual con halloween y con normal. */
-  header .logo .brand { display:flex; flex-direction:column; justify-content:center; line-height:1.08; border-bottom:3px solid #c91111; padding-bottom:5px; }
-  header .logo .marca-w { font-weight:900; font-size:1.12rem; letter-spacing:2px; color:#fff; }
-  header .logo .marca-s { font-weight:900; font-size:.66rem; letter-spacing:3.4px; color:#5b8def; margin-top:2px; }
+  header .logo { display:block; line-height:0; text-decoration:none; }
+  header .logo img { height:80px; width:auto; display:block; }
   @media (max-width:480px) {
-    header .logo { gap:9px; }
-    header .logo img { height:46px; }
-    header .logo .brand { padding-bottom:4px; }
-    header .logo .marca-w { font-size:.95rem; letter-spacing:1.6px; }
-    header .logo .marca-s { font-size:.56rem; letter-spacing:2.7px; }
+    header .logo img { height:66px; }
   }
   .lang button { border:1.5px solid var(--gold); background:transparent; color:var(--gold); font-weight:800; border-radius:20px; padding:6px 14px; font-size:.8rem; cursor:pointer; }
   .lang button.on { background:var(--gold); color:#111; border-color:var(--gold); }
@@ -257,7 +249,7 @@ window.MODULO_TEMAS = {
 <body>
 
 <header>
-  <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396"><span class="brand" aria-hidden="true"><span class="marca-w">WILLI</span><span class="marca-s">BARBERSHOP</span></span></a>
+  <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396"></a>
   <div class="lang">
     <button id="btn-es" class="on" onclick="setLang('es')">ES</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
