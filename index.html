@@ -58,11 +58,28 @@ window.MODULO_TEMAS = {
   :root { --bg:#0d0d0f; --card:#16161a; --gold:#f0a824; --txt:#f5f2ea; --mut:#a9a49a; }
   body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; }
   header { background:#000; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
-  header .logo { display:block; line-height:0; text-decoration:none; }
-  /* Logo de la barra: neón LED dorado ALREDEDOR DEL EMBLEMA — sin cuadro ni caja: la imagen
-     lleva el fondo transparente recortado a la silueta del escudo (imgs/logo-emblema.webp) y
-     la luz sale de su contorno con drop-shadow en 3 capas (cerca, media y resplandor amplio). */
-  header .logo img { height:92px; width:auto; display:block; filter:drop-shadow(0 0 4px rgba(242,213,126,.95)) drop-shadow(0 0 13px rgba(217,166,46,.55)) drop-shadow(0 0 30px rgba(217,166,46,.30)); }
+  header .logo { display:block; line-height:0; text-decoration:none; position:relative; z-index:0; }
+  /* Logo de la barra (v4, orden de Lester): foto OPACA recortada solo por el borde
+     (imgs/logo-opaco2.webp) — el negro detrás del emblema es el de su foto, sólido e intacto,
+     SIN alfa ni drop-shadow sobre la imagen. En la v4, los píxeles de ALREDEDOR del emblema
+     (fuera de su silueta) van igualados a negro puro (0,0,0), idénticos al #000 de la barra:
+     el rectángulo de la foto deja de leerse (la v3 aún mostraba «el cuadrado» porque el negro
+     de la foto trae ruido de valores 1–10). Dentro de la silueta, la foto va byte a byte.
+     Y el resplandor ya no va DETRÁS de la foto: la prueba de niveles (×4) demostró que,
+     detrás, la foto opaca lo tapa y el propio rectángulo de la imagen dibuja su borde contra
+     la luz. El mismo anillo radial va ahora SOBRE el negro con mix-blend-mode:screen — sobre
+     negro, screen deja la luz intacta y continua (sin borde de rectángulo posible), y el
+     anillo es transparente dentro del 58% del radio, así que el interior del emblema no
+     recibe ni un píxel de luz: su negro se ve negro puro, nunca velado. (Sin capa ambiental
+     central, precisamente para proteger ese interior.) El neón dorado sale del
+     círculo del emblema: un resplandor radial elíptico en ::before cuyo anillo luminoso abraza
+     el borde del disco y se desvanece a transparente (bordes circulares, sin caja de luz, y la
+     imagen opaca encima: su negro se ve negro puro, nunca velado). El emblema ocupa el centro
+     exacto del recorte (50%/50%) y su borde cae al ~65% del radio del resplandor. */
+  header .logo::before { content:""; position:absolute; left:50%; top:50%; width:152%; height:152%; transform:translate(-50%,-50%); z-index:2; pointer-events:none; filter:blur(1.5px); mix-blend-mode:screen;
+    background:
+      radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,0,0,0) 58%, rgba(242,213,126,.52) 68%, rgba(217,166,46,.22) 76%, rgba(217,166,46,0) 90%); }
+  header .logo img { height:92px; width:auto; display:block; }
   header .brand { display:flex; align-items:center; gap:14px; min-width:0; }
   header .slogan { font-family:'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive; font-style:italic; font-weight:700; white-space:nowrap; line-height:1.1; min-width:0; overflow:hidden; font-size:clamp(15.2px, calc(7.505vw - 20.7px), 27.6px); color:#C9A227; filter:drop-shadow(0 1px 0 rgba(110,79,14,.9)) drop-shadow(0 2px 1px rgba(74,52,7,.75)) drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
   @keyframes sloganOro { 0% { background-position:130% 0, 0 0; } 38% { background-position:-30% 0, 0 0; } 100% { background-position:-30% 0, 0 0; } }
@@ -318,7 +335,7 @@ window.MODULO_TEMAS = {
 
 <header>
   <div class="brand">
-    <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-emblema.webp" alt="Willi Barbershop" width="455" height="396"></a>
+    <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-opaco2.webp" alt="Willi Barbershop" width="435" height="376"></a>
     <span class="slogan">Tu estilo, nuestra pasión</span>
   </div>
   <div class="lang">
