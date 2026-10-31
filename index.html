@@ -59,9 +59,10 @@ window.MODULO_TEMAS = {
   body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--txt); max-width:640px; margin:0 auto; }
   header { background:#000; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
   header .logo { display:block; line-height:0; text-decoration:none; }
-  /* Logo de la barra: más grande y con borde LED dorado (marco luminoso fijo + resplandor,
-     sobre su forma rectangular real; box-sizing para que el alto declarado sea el total). */
-  header .logo img { height:92px; width:auto; display:block; box-sizing:border-box; border:2px solid #E9C767; border-radius:5px; box-shadow:0 0 6px 1px rgba(242,213,126,.8), 0 0 16px 4px rgba(217,166,46,.45), 0 0 34px 10px rgba(217,166,46,.2); }
+  /* Logo de la barra: neón LED dorado ALREDEDOR DEL EMBLEMA — sin cuadro ni caja: la imagen
+     lleva el fondo transparente recortado a la silueta del escudo (imgs/logo-emblema.webp) y
+     la luz sale de su contorno con drop-shadow en 3 capas (cerca, media y resplandor amplio). */
+  header .logo img { height:92px; width:auto; display:block; filter:drop-shadow(0 0 4px rgba(242,213,126,.95)) drop-shadow(0 0 13px rgba(217,166,46,.55)) drop-shadow(0 0 30px rgba(217,166,46,.30)); }
   header .brand { display:flex; align-items:center; gap:14px; min-width:0; }
   header .slogan { font-family:'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive; font-style:italic; font-weight:700; white-space:nowrap; line-height:1.1; min-width:0; overflow:hidden; font-size:clamp(15.2px, calc(7.505vw - 20.7px), 27.6px); color:#C9A227; filter:drop-shadow(0 1px 0 rgba(110,79,14,.9)) drop-shadow(0 2px 1px rgba(74,52,7,.75)) drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
   @keyframes sloganOro { 0% { background-position:130% 0, 0 0; } 38% { background-position:-30% 0, 0 0; } 100% { background-position:-30% 0, 0 0; } }
@@ -217,7 +218,6 @@ window.MODULO_TEMAS = {
   .prod h3 { font-size:.9rem; font-weight:800; margin:10px 0 2px; }
   .prod .pr { color:var(--gold); font-weight:900; font-size:1.25rem; }
   .prod a { display:inline-block; margin-top:12px; background:transparent; border:1.5px solid var(--gold); color:var(--gold); font-weight:800; font-size:.8rem; border-radius:20px; padding:9px 22px; text-decoration:none; }
-  .sample-note { font-size:.75rem; color:#6f6a60; margin-top:12px; text-align:center; font-style:italic; }
   .open7 { background:linear-gradient(135deg,#f0a824,#d17f0e); border-radius:20px; padding:26px 22px; text-align:center; color:#111; }
   .open7 h2 { color:#111; }
   .open7 p { font-weight:600; margin-top:8px; font-size:.92rem; }
@@ -258,7 +258,10 @@ window.MODULO_TEMAS = {
   footer { background:#000; text-align:center; padding:28px 18px 96px; font-size:.82rem; color:#6f6a60; border-top:1px solid #1e1e23; }
   footer .logo { line-height:0; }
   footer .logo img { height:120px; width:auto; display:inline-block; }
-  .demo-tag { background:#3a2f10; color:#d8b45a; text-align:center; font-size:.75rem; padding:8px; }
+  /* Crédito del sitio — mismo formato que en los demás sitios de clientes de New Age */
+  footer .credits { margin-top:12px; font-size:.78rem; }
+  footer .credits a { color:var(--gold); font-weight:700; text-decoration:none; }
+  footer .credits a.tel { color:#a9a49a; font-weight:600; }
 
   /* ============ TEMÁTICAS — Módulo de Temáticas: tema central en el servidor (panel interno: temas.html) ============ */
   /* La sección Halloween solo existe en pantalla con el tema halloween activo */
@@ -299,7 +302,7 @@ window.MODULO_TEMAS = {
 
 <header>
   <div class="brand">
-    <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396"></a>
+    <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-emblema.webp" alt="Willi Barbershop" width="455" height="396"></a>
     <span class="slogan">Tu estilo, nuestra pasión</span>
   </div>
   <div class="lang">
@@ -433,7 +436,6 @@ window.MODULO_TEMAS = {
   <div class="prod"><div class="em">🧢</div><h3 data-es="Gorra Willi Barbershop" data-en="Willi Barbershop cap">Gorra Willi Barbershop</h3><div class="pr">$25</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Gorra%20Willi%20Barbershop%20%28%2425%29" data-es="Pedir" data-en="Order">Pedir</a></div>
   <div class="prod"><div class="em">👕</div><h3 data-es="Camiseta Willi" data-en="Willi tee">Camiseta Willi</h3><div class="pr">$30</div><a href="https://wa.me/17868616791?text=Hola%20Willi%20Barbershop%2C%20me%20interesa%3A%20Camiseta%20Willi%20%28%2430%29" data-es="Pedir" data-en="Order">Pedir</a></div>
   </div>
-  <p class="sample-note" data-es="Productos y precios de muestra — se actualizan con tu inventario real." data-en="Sample products and prices — updated with your real inventory.">Productos y precios de muestra — se actualizan con tu inventario real.</p>
 </section>
 
 <section>
@@ -525,9 +527,8 @@ window.MODULO_TEMAS = {
 <footer>
   <div class="logo"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396" loading="lazy" decoding="async"></div>
   <p style="margin-top:8px;">3405 W Columbus Dr, Tampa, FL 33607 · (786) 861-6791</p>
+  <div class="credits"><span data-es="Diseño y programación:" data-en="Design & development:">Diseño y programación:</span> <a href="https://lmanzano86-ui.github.io/paginas-web/" target="_blank" rel="noopener">New Age Professional Services</a> · <a class="tel" href="tel:+18132353313">(813) 235-3313</a></div>
 </footer>
-
-<div class="demo-tag" data-es="Página de demostración creada por Lester Manzano" data-en="Demo page by Lester Manzano">Página de demostración creada por Lester Manzano</div>
 
 <script>
 function setLang(l){
