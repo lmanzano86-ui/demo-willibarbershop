@@ -139,7 +139,20 @@ window.MODULO_TEMAS = {
   /* La tarjeta vive DENTRO de la zona de su barbero, a la izquierda de su figura: nace con
      flex-basis 0 y aplastada contra él (scaleX con origen a la derecha) y se abre hacia la izquierda */
   .tcard { flex:0 0 0; min-width:0; overflow:hidden; margin-bottom:42px; border:1px solid transparent; border-radius:18px; box-shadow:0 14px 34px rgba(0,0,0,.5); opacity:0; visibility:hidden; transform:scaleX(.12); transform-origin:right center; pointer-events:none; text-decoration:none; transition:flex-basis .55s ease, transform .55s ease, opacity .35s ease, border-color .35s ease, visibility 0s linear .55s; }
-  .tcard img { width:100%; height:auto; display:block; }
+  /* Tarjeta con el DISEÑO OFICIAL de su banner (orden de Lester: «utiliza el diseño que ellos
+     me dieron»): piezas recortadas del propio banner — bloque emblema + especialidad impresa,
+     franja de servicios con sus iconos dorados y barra «RESERVA TU CITA + booksy» como botón —
+     apiladas sobre negro, SIN personas ni fotos de clientes (el barbero ya está de pie al lado).
+     La calificación va como texto discreto entre la franja y la reserva (Andy no tiene: perfil nuevo). */
+  .tcard { background:#000; }
+  .tinfo { display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px; padding:10px 9px; width:100%; box-sizing:border-box; }
+  .tinfo img { display:block; width:100%; height:auto; }
+  .tinfo .dbloq { width:62%; }
+  .tinfo .dcwrap { display:flex; flex-direction:column; align-items:center; gap:4px; width:100%; }
+  .tinfo .dtrab { font-size:.6rem; font-weight:800; letter-spacing:2.4px; color:var(--gold); text-transform:uppercase; }
+  .tinfo .dcortes { display:flex; gap:5px; width:100%; }
+  .tinfo .dcortes img { flex:1 1 0; min-width:0; width:auto; height:106px; object-fit:cover; border:1px solid #2a2a2e; border-radius:9px; }
+  .tinfo .trate { color:var(--gold); font-weight:800; font-size:.72rem; }
   .tcard.ver { flex-basis:58%; opacity:1; visibility:visible; transform:none; border-color:var(--gold); pointer-events:auto; transition:flex-basis .55s ease, transform .55s ease, opacity .35s ease, border-color .35s ease, visibility 0s; }
   @media (max-width:480px) {
     #barberos.abierta .mate { flex-grow:.55; }
@@ -149,6 +162,12 @@ window.MODULO_TEMAS = {
     #barberos.abierta .mate:not(.armada) .rt { visibility:hidden; }
     #barberos.abierta .mate:not(.armada) .nm { font-size:.7rem; letter-spacing:0; }
     .tcard { margin-bottom:38px; border-radius:12px; }
+    .tcard.ver { flex-basis:64%; }
+    .tinfo { padding:8px 6px; gap:4px; }
+    .tinfo .dbloq { width:74%; }
+    .tinfo .dcortes img { height:88px; border-radius:7px; }
+    .tinfo .dtrab { font-size:.54rem; letter-spacing:2px; }
+    .tinfo .trate { font-size:.62rem; }
   }
   @media (prefers-reduced-motion: reduce) { .tcard, .tcard.ver { transition:none; } .mate { transition:none; } .mate .fig img { transition:none; } }
   .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
@@ -316,12 +335,14 @@ window.MODULO_TEMAS = {
   <p class="sub" data-es="Toca a tu barbero para ver su tarjeta y reservar" data-en="Tap your barber to see their card and book">Toca a tu barbero para ver su tarjeta y reservar</p>
 
   <!-- ESCENA DE BARBEROS (variante «hacia la izquierda»): cada barbero es una zona (.mate) con su
-       tarjeta (.tcard, el banner completo) a la izquierda y su figura (.figlink, recorte transparente)
-       a la derecha, unidas por data-k. Al pasar el cursor o al primer toque, la zona se expande hacia
-       la izquierda y la tarjeta se despliega desde el barbero; el clic va a su Booksy. -->
+       tarjeta (.tcard) a la izquierda y su figura (.figlink, recorte transparente) a la derecha,
+       unidas por data-k. La tarjeta se compone con piezas del DISEÑO OFICIAL de su banner:
+       bloque emblema + especialidad, franja de servicios y barra de reserva a su Booksy, sin
+       personas ni fotos de clientes. Al pasar el cursor o al primer toque, la zona se expande
+       hacia la izquierda y la tarjeta se despliega desde el barbero; el clic va a su Booksy. -->
   <div class="crew">
     <div class="mate" data-k="willi">
-      <a class="tcard" data-k="willi" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Willi — reservar en su Booksy" aria-hidden="true" tabindex="-1"><img src="imgs/tarjeta-willi.webp" alt="Tarjeta de Willi — Willi Barbershop" width="1200" height="675" decoding="async"></a>
+      <a class="tcard" data-k="willi" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Willi — reservar en su Booksy" aria-hidden="true" tabindex="-1"><span class="tinfo"><img class="dbloq" src="imgs/diseno-willi-bloque.webp" alt="Willi Barbershop — emblema y especialidad, diseño oficial" width="509" height="554" decoding="async"><span class="dcwrap"><span class="dtrab" data-es="Sus trabajos" data-en="His work">Sus trabajos</span><span class="dcortes"><img src="imgs/cortes-willi-1.webp" alt="Trabajo de Willi: corte con fade, vista de perfil" width="300" height="450" decoding="async"><img src="imgs/cortes-willi-2.webp" alt="Trabajo de Willi: fade con diseño lateral" width="300" height="384" decoding="async"></span></span><img class="dfran" src="imgs/diseno-willi-franja.webp" alt="Servicios: corte de cabello, fade profesional, diseños personalizados, trato profesional" width="700" height="86" decoding="async"><span class="trate" data-es="★ 5.0 · 191 reseñas" data-en="★ 5.0 · 191 reviews">★ 5.0 · 191 reseñas</span><img class="dres" src="imgs/diseno-willi-reserva.webp" alt="Reserva tu cita — Booksy" width="640" height="72" decoding="async"></span></a>
       <a class="figlink" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Willi — reservar en su Booksy">
         <span class="fig"><img src="imgs/barbero-willi.webp" alt="Willi, barbero de Willi Barbershop" width="411" height="780" loading="lazy" decoding="async"></span>
         <span class="nm">Willi</span>
@@ -329,7 +350,7 @@ window.MODULO_TEMAS = {
       </a>
     </div>
     <div class="mate" data-k="jc">
-      <a class="tcard" data-k="jc" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de JC — reservar en su Booksy" aria-hidden="true" tabindex="-1"><img src="imgs/tarjeta-jc.webp" alt="Tarjeta de JC Barber — Willi Barbershop" width="1200" height="675" decoding="async"></a>
+      <a class="tcard" data-k="jc" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de JC — reservar en su Booksy" aria-hidden="true" tabindex="-1"><span class="tinfo"><img class="dbloq" src="imgs/diseno-jc-bloque.webp" alt="JC Barber — emblema y especialidad, diseño oficial" width="423" height="527" decoding="async"><span class="dcwrap"><span class="dtrab" data-es="Sus trabajos" data-en="His work">Sus trabajos</span><span class="dcortes"><img src="imgs/cortes-jc-1.webp" alt="Trabajo de JC: corte con línea, vista frontal" width="300" height="464" decoding="async"><img src="imgs/cortes-jc-2.webp" alt="Trabajo de JC: fade con diseño lateral" width="300" height="369" decoding="async"></span></span><img class="dfran" src="imgs/diseno-jc-franja.webp" alt="Servicios: corte de cabello, fade profesional, diseños personalizados, trato profesional" width="700" height="81" decoding="async"><span class="trate" data-es="★ 5.0 · 12 reseñas" data-en="★ 5.0 · 12 reviews">★ 5.0 · 12 reseñas</span><img class="dres" src="imgs/diseno-jc-reserva.webp" alt="Reserva tu cita — Booksy" width="640" height="82" decoding="async"></span></a>
       <a class="figlink" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="JC — reservar en su Booksy">
         <span class="fig"><img src="imgs/barbero-jc.webp" alt="JC, barbero de Willi Barbershop" width="484" height="780" loading="lazy" decoding="async"></span>
         <span class="nm">JC</span>
@@ -337,7 +358,7 @@ window.MODULO_TEMAS = {
       </a>
     </div>
     <div class="mate" data-k="andy">
-      <a class="tcard" data-k="andy" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Andy, Alien Barber — reservar en su Booksy" aria-hidden="true" tabindex="-1"><img src="imgs/tarjeta-andy.webp" alt="Tarjeta de Alien Barber (Andy) — Willi Barbershop" width="1200" height="675" decoding="async"></a>
+      <a class="tcard" data-k="andy" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Andy, Alien Barber — reservar en su Booksy" aria-hidden="true" tabindex="-1"><span class="tinfo"><img class="dbloq" src="imgs/diseno-andy-bloque.webp" alt="Alien Barber — emblema y especialidad, diseño oficial" width="492" height="604" decoding="async"><span class="dcwrap"><span class="dtrab" data-es="Sus trabajos" data-en="His work">Sus trabajos</span><span class="dcortes"><img src="imgs/cortes-andy-1.webp" alt="Trabajo de Andy: fade con diseño lateral" width="300" height="370" decoding="async"><img src="imgs/cortes-andy-2.webp" alt="Trabajo de Andy: diseño en la nuca" width="300" height="340" decoding="async"></span></span><img class="dfran" src="imgs/diseno-andy-franja.webp" alt="Servicios: corte de cabello, fade profesional, diseños personalizados, trato profesional" width="700" height="65" decoding="async"><img class="dres" src="imgs/diseno-andy-reserva.webp" alt="Reserva tu cita — Booksy" width="640" height="67" decoding="async"></span></a>
       <a class="figlink" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Andy, Alien Barber — reservar en su Booksy">
         <span class="fig"><img src="imgs/barbero-andy.webp" alt="Andy, Alien Barber, barbero de Willi Barbershop" width="400" height="780" loading="lazy" decoding="async"></span>
         <span class="nm">Andy</span>
