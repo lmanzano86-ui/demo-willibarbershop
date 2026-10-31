@@ -117,7 +117,11 @@ window.MODULO_TEMAS = {
     .mate .rt { font-size:.68rem; }
     .mate .rt.alias { font-size:.6rem; letter-spacing:.8px; }
   }
-  .mate .fig { height:min(57vw, 328px); display:flex; align-items:flex-end; justify-content:center; }
+  .mate .fig { height:min(57vw, 328px); display:flex; align-items:flex-end; justify-content:center; transition:height .5s ease; }
+  /* Con una tarjeta abierta las figuras se encogen un poco: barbero y tarjeta caben juntos en pantalla */
+  #barberos.abierta .mate .fig { height:min(43vw, 240px); }
+  #barberos { scroll-margin-top:86px; }
+  @media (max-width:480px) { #barberos { scroll-margin-top:78px; } }
   .mate .fig img { max-height:100%; max-width:100%; width:auto; height:auto; display:block; filter:drop-shadow(0 10px 13px rgba(0,0,0,.55)); transition:transform .3s ease, filter .3s ease; }
   .mate:hover .fig img, .mate:focus-visible .fig img, .mate.armada .fig img { transform:translateY(-4px) scale(1.035); filter:drop-shadow(0 0 15px rgba(240,168,36,.45)) drop-shadow(0 12px 15px rgba(0,0,0,.55)); }
   .mate .nm { display:block; font-weight:900; font-size:.98rem; letter-spacing:.4px; margin-top:9px; }
@@ -127,8 +131,8 @@ window.MODULO_TEMAS = {
   #barberos.abierta .crew-panel { max-height:470px; }
   .tcard { display:none; margin-top:16px; border:1px solid var(--gold); border-radius:18px; overflow:hidden; box-shadow:0 14px 34px rgba(0,0,0,.5); }
   .tcard img { width:100%; height:auto; display:block; }
-  .tcard.ver { display:block; animation:cardIn .35s ease; }
-  @keyframes cardIn { from { opacity:0; transform:translateY(8px) scale(.99); } to { opacity:1; transform:none; } }
+  .tcard.ver { display:block; animation:cardIn .45s ease; }
+  @keyframes cardIn { from { opacity:0; transform:translateX(-38px); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion: reduce) { .tcard.ver { animation:none; } .mate .fig img { transition:none; } }
   .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .prod { background:var(--card); border:1px solid #26262b; border-radius:16px; padding:20px 12px; text-align:center; }
@@ -315,9 +319,9 @@ window.MODULO_TEMAS = {
     </a>
   </div>
   <div class="crew-panel">
-    <a class="tcard" data-k="willi" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Willi — reservar en su Booksy"><img src="imgs/tarjeta-willi.webp" alt="Tarjeta de Willi — Willi Barbershop" width="1200" height="675" loading="lazy" decoding="async"></a>
-    <a class="tcard" data-k="jc" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de JC — reservar en su Booksy"><img src="imgs/tarjeta-jc.webp" alt="Tarjeta de JC Barber — Willi Barbershop" width="1200" height="675" loading="lazy" decoding="async"></a>
-    <a class="tcard" data-k="andy" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Andy, Alien Barber — reservar en su Booksy"><img src="imgs/tarjeta-andy.webp" alt="Tarjeta de Alien Barber (Andy) — Willi Barbershop" width="1200" height="675" loading="lazy" decoding="async"></a>
+    <a class="tcard" data-k="willi" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Willi — reservar en su Booksy"><img src="imgs/tarjeta-willi.webp" alt="Tarjeta de Willi — Willi Barbershop" width="1200" height="675" decoding="async"></a>
+    <a class="tcard" data-k="jc" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de JC — reservar en su Booksy"><img src="imgs/tarjeta-jc.webp" alt="Tarjeta de JC Barber — Willi Barbershop" width="1200" height="675" decoding="async"></a>
+    <a class="tcard" data-k="andy" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Andy, Alien Barber — reservar en su Booksy"><img src="imgs/tarjeta-andy.webp" alt="Tarjeta de Alien Barber (Andy) — Willi Barbershop" width="1200" height="675" decoding="async"></a>
   </div>
 </section>
 
@@ -461,6 +465,27 @@ function setLang(l){
     mates.forEach(function(m){ m.classList.toggle('armada', m.getAttribute('data-k')===k); });
     cards.forEach(function(c){ c.classList.toggle('ver', c.getAttribute('data-k')===k); });
     sec.classList.add('abierta');
+    encuadrar(k);
+  }
+  /* Que se vean AMBAS cosas: al terminar el despliegue, si la tarjeta no cabe
+     en pantalla junto a las figuras, la vista se desliza para encuadrar la
+     seccion completa (figuras arriba, tarjeta debajo) bajo el encabezado fijo. */
+  function encuadrar(k){
+    setTimeout(function(){
+      if(abierta !== k) return;
+      var card = sec.querySelector('.tcard.ver'); if(!card) return;
+      var vh = window.innerHeight || 0;
+      var cr = card.getBoundingClientRect();
+      var crew = sec.querySelector('.crew'); if(!crew) return;
+      var fr = crew.getBoundingClientRect();
+      var hd = document.querySelector('header');
+      var hh = hd ? hd.offsetHeight : 0;
+      if(cr.bottom > vh - 2 || fr.top < hh + 2){
+        var y = window.scrollY + sec.getBoundingClientRect().top - (hh + 8);
+        var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: Math.max(0, y), behavior: rm ? 'auto' : 'smooth' });
+      }
+    }, 560);
   }
   function cerrarLuego(){
     clearTimeout(timer);
