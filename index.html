@@ -60,8 +60,16 @@ window.MODULO_TEMAS = {
   header { background:#000; padding:12px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; border-bottom:1px solid #26262b; }
   header .logo { display:block; line-height:0; text-decoration:none; }
   header .logo img { height:80px; width:auto; display:block; }
+  header .brand { display:flex; align-items:center; gap:14px; min-width:0; }
+  header .slogan { font-family:'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive; font-style:italic; font-weight:700; white-space:nowrap; line-height:1.1; font-size:clamp(15px, 3.3vw, 22px); color:#C9A227; filter:drop-shadow(0 1px 1px rgba(0,0,0,.55)); }
+  @supports ((-webkit-background-clip:text) or (background-clip:text)) {
+    header .slogan { background:linear-gradient(172deg, #F2D57E 0%, #E3B341 34%, #C9A227 62%, #9A7B1C 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; }
+  }
   @media (max-width:480px) {
+    header { padding:12px; }
+    header .brand { gap:9px; }
     header .logo img { height:66px; }
+    header .slogan { font-size:clamp(11px, 3.55vw, 15px); }
   }
   .lang button { border:1.5px solid var(--gold); background:transparent; color:var(--gold); font-weight:800; border-radius:20px; padding:6px 14px; font-size:.8rem; cursor:pointer; }
   .lang button.on { background:var(--gold); color:#111; border-color:var(--gold); }
@@ -249,7 +257,10 @@ window.MODULO_TEMAS = {
 <body>
 
 <header>
-  <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396"></a>
+  <div class="brand">
+    <a class="logo" href="./" aria-label="Willi Barbershop — inicio"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396"></a>
+    <span class="slogan">Tu estilo, nuestra pasión</span>
+  </div>
   <div class="lang">
     <button id="btn-es" class="on" onclick="setLang('es')">ES</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
