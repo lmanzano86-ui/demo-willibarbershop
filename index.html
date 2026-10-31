@@ -106,15 +106,30 @@ window.MODULO_TEMAS = {
   .price-card a.p { text-decoration:none; border:1.5px solid var(--gold); border-radius:12px; padding:10px 16px; display:block; text-align:center; transition:background .15s; font-size:.95rem; font-weight:900; letter-spacing:1px; }
   .price-card a.p:hover { background:rgba(240,168,36,.12); }
   .walkin { display:inline-block; background:#25d366; color:#062b16; font-size:.78rem; font-weight:900; letter-spacing:1px; border-radius:20px; padding:7px 16px; margin-top:10px; }
-  .barber-card { background:var(--card); border:1px solid var(--gold); border-radius:18px; overflow:hidden; margin-bottom:14px; }
-  .barber-card .photo { display:block; position:relative; }
-  .barber-card .photo img { width:100%; height:340px; object-fit:cover; display:block; }
-  .barber-card .tap { position:absolute; left:50%; transform:translateX(-50%); bottom:14px; background:var(--gold); color:#111; font-weight:900; font-size:.8rem; letter-spacing:1px; border-radius:20px; padding:8px 18px; white-space:nowrap; box-shadow:0 4px 14px rgba(0,0,0,.45); }
-  .barber-card .binfo { padding:18px; text-align:center; }
-  .barber-card .binfo h3 { font-size:1.3rem; font-weight:900; }
-  .barber-card .rating { color:var(--gold); font-weight:800; margin-top:6px; font-size:.9rem; }
-  .barber-social { display:flex; gap:10px; justify-content:center; margin-top:12px; }
-  .barber-social a { color:var(--gold); border:1.5px solid var(--gold); border-radius:20px; padding:7px 16px; font-size:.8rem; font-weight:800; text-decoration:none; }
+  /* Barberos: UNA escena — los 3 de pie (recorte transparente de su banner), misma línea de suelo;
+     al pasar el cursor / tocar se despliega su tarjeta completa (el banner) y el clic va a su Booksy */
+  .crew { position:relative; display:flex; justify-content:center; padding-top:8px; }
+  .crew::before { content:""; position:absolute; left:5%; right:5%; bottom:41px; height:1px; background:linear-gradient(90deg, transparent, rgba(240,168,36,.38), transparent); pointer-events:none; }
+  .crew::after { content:""; position:absolute; left:3%; right:3%; bottom:28px; height:26px; background:radial-gradient(ellipse at center, rgba(0,0,0,.68) 0%, rgba(0,0,0,0) 68%); pointer-events:none; }
+  .mate { flex:1 1 0; min-width:0; display:flex; flex-direction:column; text-decoration:none; color:var(--txt); text-align:center; position:relative; z-index:1; -webkit-tap-highlight-color:transparent; }
+  @media (max-width:480px) {
+    .mate .nm { font-size:.9rem; }
+    .mate .rt { font-size:.68rem; }
+    .mate .rt.alias { font-size:.6rem; letter-spacing:.8px; }
+  }
+  .mate .fig { height:min(57vw, 328px); display:flex; align-items:flex-end; justify-content:center; }
+  .mate .fig img { max-height:100%; max-width:100%; width:auto; height:auto; display:block; filter:drop-shadow(0 10px 13px rgba(0,0,0,.55)); transition:transform .3s ease, filter .3s ease; }
+  .mate:hover .fig img, .mate:focus-visible .fig img, .mate.armada .fig img { transform:translateY(-4px) scale(1.035); filter:drop-shadow(0 0 15px rgba(240,168,36,.45)) drop-shadow(0 12px 15px rgba(0,0,0,.55)); }
+  .mate .nm { display:block; font-weight:900; font-size:.98rem; letter-spacing:.4px; margin-top:9px; }
+  .mate .rt { display:block; color:var(--gold); font-weight:800; font-size:.74rem; margin-top:2px; }
+  .mate .rt.alias { color:var(--mut); font-weight:700; font-size:.68rem; letter-spacing:1.6px; text-transform:uppercase; }
+  .crew-panel { max-height:0; overflow:hidden; transition:max-height .5s ease; }
+  #barberos.abierta .crew-panel { max-height:470px; }
+  .tcard { display:none; margin-top:16px; border:1px solid var(--gold); border-radius:18px; overflow:hidden; box-shadow:0 14px 34px rgba(0,0,0,.5); }
+  .tcard img { width:100%; height:auto; display:block; }
+  .tcard.ver { display:block; animation:cardIn .35s ease; }
+  @keyframes cardIn { from { opacity:0; transform:translateY(8px) scale(.99); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .tcard.ver { animation:none; } .mate .fig img { transition:none; } }
   .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .prod { background:var(--card); border:1px solid #26262b; border-radius:16px; padding:20px 12px; text-align:center; }
   .prod .em { font-size:2.4rem; }
@@ -277,32 +292,32 @@ window.MODULO_TEMAS = {
   <svg class="web web-tr" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="none" stroke="rgba(232,226,214,.55)" stroke-width="1.2"><path d="M0,0 L100,7"/><path d="M0,0 L93,42"/><path d="M0,0 L71,71"/><path d="M0,0 L42,93"/><path d="M0,0 L7,100"/><path d="M26,0 A26,26 0 0 1 0,26"/><path d="M52,0 A52,52 0 0 1 0,52" stroke="rgba(240,168,36,.55)"/><path d="M78,0 A78,78 0 0 1 0,78"/></g></svg>
   <div class="kick" data-es="BARBEROS" data-en="BARBERS">BARBEROS</div>
   <h2 data-es="Barberos" data-en="Barbers">Barberos</h2>
-  <p class="sub" data-es="Toca la foto de tu barbero para reservar en su Booksy" data-en="Tap your barber's photo to book on their Booksy">Toca la foto de tu barbero para reservar en su Booksy</p>
+  <p class="sub" data-es="Toca a tu barbero para ver su tarjeta y reservar" data-en="Tap your barber to see their card and book">Toca a tu barbero para ver su tarjeta y reservar</p>
 
-  <!-- FICHA DE BARBERO: duplicar este bloque por cada barbero nuevo (foto completa enlazada a su perfil de Booksy, nombre y redes sociales debajo). -->
-  <div class="barber-card">
-    <a class="photo" href="https://willibarber1.booksy.com/a/">
-      <img src="imgs/barbero-willibarber1.webp" alt="Willibarber_1, barbero de Willi Barbershop" width="1174" height="660" loading="lazy" decoding="async">
-      <span class="tap" data-es="📅 TOCA LA FOTO PARA RESERVAR" data-en="📅 TAP THE PHOTO TO BOOK">📅 TOCA LA FOTO PARA RESERVAR</span>
+  <!-- ESCENA DE BARBEROS: una figura (.mate) + una tarjeta (.tcard) por barbero, unidas por data-k.
+       La figura es el recorte transparente de su banner; la tarjeta es el banner completo.
+       Al pasar el cursor o al primer toque se despliega la tarjeta; el clic va a su Booksy. -->
+  <div class="crew">
+    <a class="mate" data-k="willi" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Willi — reservar en su Booksy">
+      <span class="fig"><img src="imgs/barbero-willi.webp" alt="Willi, barbero de Willi Barbershop" width="411" height="780" loading="lazy" decoding="async"></span>
+      <span class="nm">Willi</span>
+      <span class="rt" data-es="★ 5.0 · 191 reseñas" data-en="★ 5.0 · 191 reviews">★ 5.0 · 191 reseñas</span>
     </a>
-    <div class="binfo">
-      <h3>Willibarber_1</h3>
-      <div class="rating" data-es="★★★★★ 5.0 · 191 reseñas en Booksy" data-en="★★★★★ 5.0 · 191 reviews on Booksy">★★★★★ 5.0 · 191 reseñas en Booksy</div>
-      <!-- REDES: pendiente de datos — no hay redes verificadas de Willibarber_1. Cuando el negocio las pase, añadirlas aquí, por ejemplo:
-      <div class="barber-social"><a href="URL_INSTAGRAM">📸 Instagram</a><a href="URL_TIKTOK">🎵 TikTok</a></div> -->
-    </div>
+    <a class="mate" data-k="jc" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="JC — reservar en su Booksy">
+      <span class="fig"><img src="imgs/barbero-jc.webp" alt="JC, barbero de Willi Barbershop" width="484" height="780" loading="lazy" decoding="async"></span>
+      <span class="nm">JC</span>
+      <span class="rt" data-es="★ 5.0 · 12 reseñas" data-en="★ 5.0 · 12 reviews">★ 5.0 · 12 reseñas</span>
+    </a>
+    <a class="mate" data-k="andy" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Andy, Alien Barber — reservar en su Booksy">
+      <span class="fig"><img src="imgs/barbero-andy.webp" alt="Andy, Alien Barber, barbero de Willi Barbershop" width="400" height="780" loading="lazy" decoding="async"></span>
+      <span class="nm">Andy</span>
+      <span class="rt alias">Alien Barber</span>
+    </a>
   </div>
-
-  <div class="barber-card">
-    <a class="photo" href="https://jcrealbarber56.booksy.com/a/">
-      <img src="imgs/barbero-jcrealbarber56.webp" alt="Jc Real Barber, barbero de Willi Barbershop" width="1174" height="782" loading="lazy" decoding="async">
-      <span class="tap" data-es="📅 TOCA LA FOTO PARA RESERVAR" data-en="📅 TAP THE PHOTO TO BOOK">📅 TOCA LA FOTO PARA RESERVAR</span>
-    </a>
-    <div class="binfo">
-      <h3>Jc Real Barber</h3>
-      <div class="rating" data-es="★★★★★ 5.0 · 12 reseñas en Booksy" data-en="★★★★★ 5.0 · 12 reviews on Booksy">★★★★★ 5.0 · 12 reseñas en Booksy</div>
-      <!-- REDES: pendiente de datos — no hay redes verificadas de Jc Real Barber. Cuando el negocio las pase, añadirlas aquí igual que en la ficha de Willibarber_1. -->
-    </div>
+  <div class="crew-panel">
+    <a class="tcard" data-k="willi" href="https://willibarber1.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Willi — reservar en su Booksy"><img src="imgs/tarjeta-willi.webp" alt="Tarjeta de Willi — Willi Barbershop" width="1200" height="675" loading="lazy" decoding="async"></a>
+    <a class="tcard" data-k="jc" href="https://jcrealbarber56.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de JC — reservar en su Booksy"><img src="imgs/tarjeta-jc.webp" alt="Tarjeta de JC Barber — Willi Barbershop" width="1200" height="675" loading="lazy" decoding="async"></a>
+    <a class="tcard" data-k="andy" href="https://willibarbershop47.booksy.com/a/" target="_blank" rel="noopener" aria-label="Tarjeta de Andy, Alien Barber — reservar en su Booksy"><img src="imgs/tarjeta-andy.webp" alt="Tarjeta de Alien Barber (Andy) — Willi Barbershop" width="1200" height="675" loading="lazy" decoding="async"></a>
   </div>
 </section>
 
@@ -431,6 +446,54 @@ function setLang(l){
   var idx = (d+6)%7;
   var rows = document.getElementById('hours-table').rows;
   if(rows[idx]) rows[idx].className = 'today';
+})();
+</script>
+<script>
+/* Barberos: despliegue de la tarjeta. Un solo dueño del estado (esta función) para que
+   el paso del cursor de la figura a la tarjeta no la cierre a mitad de camino. */
+(function(){
+  var sec = document.getElementById('barberos');
+  if(!sec) return;
+  var mates = sec.querySelectorAll('.mate'), cards = sec.querySelectorAll('.tcard');
+  var abierta = null, timer = null;
+  function abrir(k){
+    clearTimeout(timer); abierta = k;
+    mates.forEach(function(m){ m.classList.toggle('armada', m.getAttribute('data-k')===k); });
+    cards.forEach(function(c){ c.classList.toggle('ver', c.getAttribute('data-k')===k); });
+    sec.classList.add('abierta');
+  }
+  function cerrarLuego(){
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+      abierta = null; sec.classList.remove('abierta');
+      mates.forEach(function(m){ m.classList.remove('armada'); });
+      cards.forEach(function(c){ c.classList.remove('ver'); });
+    }, 280);
+  }
+  mates.forEach(function(m){
+    var k = m.getAttribute('data-k');
+    m.addEventListener('pointerenter', function(e){ if(e.pointerType==='mouse') abrir(k); });
+    m.addEventListener('pointerleave', function(e){ if(e.pointerType==='mouse') cerrarLuego(); });
+    m.addEventListener('focus', function(){ abrir(k); });
+    m.addEventListener('blur', cerrarLuego);
+    m.addEventListener('pointerdown', function(e){
+      /* Táctil: si su tarjeta no está desplegada, este toque la despliega (y el clic se frena) */
+      if(e.pointerType !== 'mouse' && abierta !== k){ abrir(k); m.setAttribute('data-freno','1'); }
+    });
+    m.addEventListener('click', function(e){
+      /* Primer toque táctil: solo despliega. Segundo toque (tarjeta ya abierta): sigue a Booksy */
+      if(m.getAttribute('data-freno')==='1'){ e.preventDefault(); m.removeAttribute('data-freno'); }
+    });
+  });
+  cards.forEach(function(c){
+    c.addEventListener('pointerenter', function(e){ if(e.pointerType==='mouse'){ clearTimeout(timer); } });
+    c.addEventListener('pointerleave', function(e){ if(e.pointerType==='mouse') cerrarLuego(); });
+    c.addEventListener('focus', function(){ abrir(c.getAttribute('data-k')); });
+    c.addEventListener('blur', cerrarLuego);
+  });
+  document.addEventListener('click', function(e){
+    if(abierta && !sec.contains(e.target)) cerrarLuego();
+  });
 })();
 </script>
 </body>
