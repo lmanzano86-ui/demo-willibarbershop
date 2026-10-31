@@ -61,7 +61,7 @@ window.MODULO_TEMAS = {
   header .logo { display:block; line-height:0; text-decoration:none; }
   header .logo img { height:80px; width:auto; display:block; }
   header .brand { display:flex; align-items:center; gap:14px; min-width:0; }
-  header .slogan { font-family:'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive; font-style:italic; font-weight:700; white-space:nowrap; line-height:1.1; font-size:clamp(22px, calc(9.8vw - 24px), 38px); color:#C9A227; filter:drop-shadow(0 1px 0 rgba(110,79,14,.9)) drop-shadow(0 2px 1px rgba(74,52,7,.75)) drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
+  header .slogan { font-family:'Segoe Script', 'Brush Script MT', 'Snell Roundhand', 'Apple Chancery', cursive; font-style:italic; font-weight:700; white-space:nowrap; line-height:1.1; min-width:0; overflow:hidden; font-size:clamp(16px, calc(7.9vw - 21.8px), 29px); color:#C9A227; filter:drop-shadow(0 1px 0 rgba(110,79,14,.9)) drop-shadow(0 2px 1px rgba(74,52,7,.75)) drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
   @keyframes sloganOro { 0% { background-position:130% 0, 0 0; } 38% { background-position:-30% 0, 0 0; } 100% { background-position:-30% 0, 0 0; } }
   @supports ((-webkit-background-clip:text) or (background-clip:text)) {
     header .slogan { background-image:linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,252,230,.9) 50%, rgba(255,255,255,0) 60%), linear-gradient(178deg, #FFF6C9 0%, #F2D57E 24%, #D9A62E 43%, #8A6414 56%, #B8912B 68%, #E3B341 82%, #FFF0A6 100%); background-size:280% 100%, 100% 100%; background-position:130% 0, 0 0; background-repeat:no-repeat; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation:sloganOro 7s ease-in-out infinite; }
@@ -71,8 +71,9 @@ window.MODULO_TEMAS = {
     header { padding:12px; }
     header .brand { gap:9px; }
     header .logo img { height:66px; }
-    header .slogan { font-size:clamp(10px, calc(9.25vw - 19.4px), 25px); }
+    header .slogan { font-size:clamp(7px, calc(7.5vw - 17px), 19px); }
   }
+  .lang { flex:none; }
   .lang button { border:1.5px solid var(--gold); background:transparent; color:var(--gold); font-weight:800; border-radius:20px; padding:6px 14px; font-size:.8rem; cursor:pointer; }
   .lang button.on { background:var(--gold); color:#111; border-color:var(--gold); }
   .hero { position:relative; }
@@ -140,6 +141,14 @@ window.MODULO_TEMAS = {
   #barberos { scroll-margin-top:119px; }
   @media (max-width:480px) { #barberos { scroll-margin-top:105px; } }
   .mate .fig img { max-height:100%; max-width:100%; width:auto; height:auto; display:block; filter:drop-shadow(0 10px 13px rgba(0,0,0,.55)); transition:transform .3s ease, filter .3s ease; }
+  /* JC: su foto trae un encuadre más abierto — a igual ranura su cabeza rendía 48px contra
+     ~56px de media del grupo (medido en másteres y en la escena). Se escala SOLO su figura
+     ×1.17 anclada a la línea del suelo (la base no se mueve; crece hacia arriba): en la
+     escena cerrada manda el ancho de ranura (max-width), con su tarjeta abierta manda el
+     alto de su .fig. */
+  .mate[data-k="jc"] .fig img { max-width:117%; }
+  #barberos.abierta .mate[data-k="jc"].armada .fig { height:calc(min(47vw, 262px) * 1.17); }
+  @media (max-width:480px) { #barberos.abierta .mate[data-k="jc"].armada .fig { height:calc(min(56vw, 205px) * 1.17); } }
   .mate:hover .fig img, .mate:focus-within .fig img, .mate.armada .fig img { transform:translateY(-4px) scale(1.035); filter:drop-shadow(0 0 15px rgba(240,168,36,.45)) drop-shadow(0 12px 15px rgba(0,0,0,.55)); }
   .mate .nm { display:block; font-weight:900; font-size:.98rem; letter-spacing:.4px; margin-top:9px; }
   .mate .rt { display:block; color:var(--gold); font-weight:800; font-size:.74rem; margin-top:2px; }
