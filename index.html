@@ -568,7 +568,7 @@ window.MODULO_TEMAS = {
   <div class="logo"><img src="imgs/logo-oficial.webp" alt="Willi Barbershop" width="455" height="396" loading="lazy" decoding="async"></div>
   <p style="margin-top:8px;">3405 W Columbus Dr, Tampa, FL 33607 · (786) 861-6791</p>
   <p><a href="privacidad.html">Privacidad</a> · <a href="terminos.html">Términos</a> · <a href="cookies.html">Cookies</a></p>
-  <div class="credits"><span data-es="Diseño y programación:" data-en="Design & development:">Diseño y programación:</span> <a href="https://lmanzano86-ui.github.io/paginas-web/" target="_blank" rel="noopener">New Age Professional System</a> · Lester Manzano · <a class="tel" href="tel:+18132353313">(813) 235-3313</a></div>
+  <div class="credits"><img src="/logo-newage-mini.png" alt="" aria-hidden="true" style="width:18px;height:18px;border-radius:50%;vertical-align:-4px;margin-right:6px"><span data-es="Diseño y programación:" data-en="Design & development:">Diseño y programación:</span> <a href="https://lmanzano86-ui.github.io/paginas-web/" target="_blank" rel="noopener">New Age Professional System</a> · Lester Manzano · <a class="tel" href="tel:+18132353313">(813) 235-3313</a></div>
 </footer>
 
 <script>
@@ -686,6 +686,51 @@ function setLang(l){
   });
   document.addEventListener('click', function(e){
     if(abierta && !sec.contains(e.target)) cerrarLuego();
+  });
+})();
+</script>
+
+<!-- Consentimiento + Google Analytics (solo carga tras Aceptar) -->
+<style>
+#aviso-cookies{position:fixed;left:16px;right:16px;bottom:16px;z-index:90;max-width:640px;margin:0 auto;background:#16161a;border:1px solid #f0a824;border-radius:14px;padding:16px 18px;box-shadow:0 18px 50px rgba(0,0,0,.5);color:#f5f2ea;font-family:system-ui,sans-serif}
+#aviso-cookies p{margin:0 0 12px;font-size:.92rem;line-height:1.55;color:#a9a49a}
+#aviso-cookies a{color:#f0a824;text-decoration:underline}
+#aviso-cookies .fila{display:flex;gap:10px;flex-wrap:wrap}
+#aviso-cookies button{cursor:pointer;border-radius:10px;padding:10px 18px;font-weight:700;font-size:.92rem;border:1px solid #f0a824}
+#btn-aceptar-cookies{background:#f0a824;border-color:#f0a824;color:#0d0d0f}
+#btn-rechazar-cookies{background:transparent;color:#f5f2ea}
+</style>
+<div id="aviso-cookies" hidden>
+  <p>Usamos cookies esenciales para que el sitio funcione. Si aceptas, también medimos las visitas con Google Analytics para mejorar la página; sin tu permiso no se carga ningún medidor. Detalle en la <a href="cookies.html">política de cookies</a>.</p>
+  <div class="fila">
+    <button id="btn-aceptar-cookies" type="button">Aceptar</button>
+    <button id="btn-rechazar-cookies" type="button">Rechazar</button>
+  </div>
+</div>
+<script>
+(function(){
+  var ID='G-VZLXPPVPSP', clave='willi-consentimiento', eleccion=null;
+  try{ eleccion=localStorage.getItem(clave); }catch(e){}
+  function cargarGA(){
+    if(window.__gaCargado) return; window.__gaCargado=true;
+    var s=document.createElement('script'); s.async=true;
+    s.src='https://www.googletagmanager.com/gtag/js?id='+ID;
+    document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag=gtag; gtag('js', new Date()); gtag('config', ID);
+  }
+  if(eleccion==='si'){ cargarGA(); return; }
+  if(eleccion==='no'){ return; }
+  var aviso=document.getElementById('aviso-cookies');
+  aviso.hidden=false;
+  document.getElementById('btn-aceptar-cookies').addEventListener('click', function(){
+    try{ localStorage.setItem(clave,'si'); }catch(e){}
+    aviso.hidden=true; cargarGA();
+  });
+  document.getElementById('btn-rechazar-cookies').addEventListener('click', function(){
+    try{ localStorage.setItem(clave,'no'); }catch(e){}
+    aviso.hidden=true;
   });
 })();
 </script>
